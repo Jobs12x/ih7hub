@@ -285,7 +285,7 @@ const Index = () => {
       <section id="modulos" className="py-24 relative z-[1]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>02 — Conteúdo</SectionLabel>
-          <SectionTitle>O Que Está <em className="italic text-gold">Incluído</em></SectionTitle>
+          <SectionTitle>Nossos <em className="italic text-gold">Entregáveis</em></SectionTitle>
           <ModuleAccordion modules={contentModules} />
         </div>
       </section>

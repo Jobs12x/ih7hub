@@ -299,7 +299,7 @@ const Index = () => {
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>03 — Investimento</SectionLabel>
           <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
-          <p className="text-[13px] text-muted mb-3">Duração: 5 meses · 2 encontros por mês · parcelado ou à vista</p>
+          <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
 
           {/* Coletiva */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
@@ -310,7 +310,7 @@ const Index = () => {
             <PlanCard
               badge="Entrada" badgeStyle="gold"
               subtitle="Coletiva · Online"
-              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
               headline="Aprenda IA com quem está no mesmo movimento que você."
               description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
@@ -330,7 +330,7 @@ const Index = () => {
             <PlanCard
               badge="+ Presença" badgeStyle="green"
               subtitle="Coletiva · Presencial"
-              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
               headline="O método ao vivo, com a profundidade que só o presencial entrega."
               description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
@@ -360,7 +360,7 @@ const Index = () => {
             <PlanCard
               badge="Individual · Online" badgeStyle="gold"
               subtitle="Atendimento Exclusivo"
-              price="R$ 1.200" priceNote="2 encontros/mês · 5 meses"
+              price="R$ 1.200" priceNote="2 encontros/mês · 3 meses"
               headline="Acompanhamento focado no seu contexto, no seu ritmo."
               description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."
@@ -379,7 +379,7 @@ const Index = () => {
             <PlanCard
               badge="Recomendado" badgeStyle="blue"
               subtitle="Individual · Presencial"
-              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 5 meses"
+              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 3 meses"
               headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
               description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."

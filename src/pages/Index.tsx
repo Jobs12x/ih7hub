@@ -232,7 +232,7 @@ const Index = () => {
           <span className="text-xl font-semibold text-white tracking-wide">IH7</span>
         </a>
         <ul className="hidden md:flex gap-8 list-none">
-          {[["#sobre", "Framework"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
+          {[["#", "Início"], ["#sobre", "Framework"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
             <li key={href}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="text-[13px] font-medium text-muted tracking-[0.05em] uppercase no-underline transition-colors hover:text-gold">{label}</a></li>
           ))}
         </ul>
@@ -312,18 +312,17 @@ const Index = () => {
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>01 — Público</SectionLabel>
           <SectionTitle>Para <em className="italic text-gold">Quem</em> É</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { tag: "Executivas & Gestoras", title: "Liderança com IA", desc: "Que querem incorporar IA nas suas decisões, equipes e estratégias com fundamento — não por moda." },
-              { tag: "Reposicionamento", title: "Diferenciação de Carreira", desc: "Profissionais que buscam se diferenciar no mercado usando IA com clareza de propósito e direção." },
-              { tag: "Inovação & Consultoria", title: "Líderes de Inovação", desc: "Consultores e líderes que precisam estruturar diagnósticos e planos de adoção de IA nas suas organizações." },
-              { tag: "Mulheres & IA", title: "Autonomia Estratégica", desc: "Que querem usar IA como alavanca estratégica para crescer na carreira e nos negócios com autonomia real." },
+              { tag: "Empreendedoras", title: "Tração & Expansão", desc: "Empreendedoras que querem tracionar e expandir seu negócio com o poder da Inteligência Artificial aplicada à estratégia." },
+              { tag: "Profissionais", title: "Produtividade no Trabalho", desc: "Profissionais que querem melhorar sua produtividade no trabalho usando IA de forma prática e com resultados reais." },
+              { tag: "Autônomos", title: "IA no Seu Negócio", desc: "Profissionais autônomos que querem usar IA no seu negócio para ganhar eficiência, escala e diferenciação no mercado." },
             ].map((item, i) => (
-              <div key={i} className="group bg-surface border border-border-v rounded-lg px-8 py-7 relative overflow-hidden transition-all hover:border-border hover:bg-surface2">
-                <div className="absolute top-0 left-0 w-[3px] h-0 bg-gold rounded transition-all duration-400 group-hover:h-full" />
-                <div className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold mb-2.5">{item.tag}</div>
-                <div className="font-display text-[17px] font-semibold text-white mb-2">{item.title}</div>
-                <p className="text-[13px] text-foreground leading-relaxed">{item.desc}</p>
+              <div key={i} className="group bg-surface border border-border-v rounded-lg px-8 py-8 relative overflow-hidden transition-all hover:border-gold/40 hover:bg-surface2">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold/0 transition-all duration-400 group-hover:bg-gold" />
+                <div className="font-mono-label text-[10px] tracking-[0.18em] uppercase text-gold mb-3">{item.tag}</div>
+                <div className="font-display text-xl font-semibold text-white mb-3">{item.title}</div>
+                <p className="text-sm text-foreground leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>

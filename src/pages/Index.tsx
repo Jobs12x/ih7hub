@@ -232,7 +232,7 @@ const Index = () => {
           <span className="text-xl font-semibold text-white tracking-wide">IH7</span>
         </a>
         <ul className="hidden md:flex gap-8 list-none">
-          {[["#sobre", "Framework"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"]].map(([href, label]) => (
+          {[["#sobre", "Framework"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
             <li key={href}><a href={href} className="text-[13px] font-medium text-muted tracking-[0.05em] uppercase no-underline transition-colors hover:text-gold">{label}</a></li>
           ))}
         </ul>

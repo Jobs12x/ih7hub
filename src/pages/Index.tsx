@@ -294,10 +294,194 @@ const Index = () => {
 
       <SectionSep />
 
+      {/* QUIZ */}
+      <section id="teste" className="py-24 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <div className="font-mono-label text-[10px] tracking-[0.25em] uppercase text-gold mb-5 flex items-center justify-center gap-3">Autodiagnóstico</div>
+          <h2 className="font-display text-[clamp(34px,4vw,52px)] font-bold text-white leading-tight mb-5 text-center">
+            Em que nível você <em className="italic text-gold">está hoje?</em>
+          </h2>
+          <p className="text-sm text-muted text-center mb-14 max-w-[460px] mx-auto">Três perguntas rápidas para identificar seu estágio de fluência em inteligência híbrida.</p>
+          <FluencyQuiz />
+        </div>
+      </section>
+
+      <SectionSep />
+
       {/* INVESTIMENTO */}
       <section id="investimento" className="py-24 relative z-[1]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>03 — Investimento</SectionLabel>
+          <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
+          <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
+
+          {/* Coletiva */}
+          <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
+            <span className="w-6 h-px bg-gold inline-block" />
+            Trabalho &amp; Negócios — Coletiva
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
+            <PlanCard
+              badge="Entrada" badgeStyle="gold"
+              subtitle="Coletiva · Online"
+              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              headline="Aprenda IA com quem está no mesmo movimento que você."
+              description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
+              vagas="até 10 alunos por turma"
+              features={[
+                { text: "Diagnóstico de maturidade em IA (formato grupo)", included: true },
+                { text: "Relatório coletivo com nível de maturidade e direcionamentos gerais", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 sessões ao vivo por mês em grupo reduzido (online)", included: true },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
+            />
+            <PlanCard
+              badge="+ Presença" badgeStyle="green"
+              subtitle="Coletiva · Presencial"
+              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              headline="O método ao vivo, com a profundidade que só o presencial entrega."
+              description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
+              vagas="até 5 alunos por turma"
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA com devolutiva ao vivo em grupo", included: true },
+                { text: "Relatório coletivo com plano de ação e prioridades por perfil", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 encontros presenciais por mês em grupo reduzido", included: true },
+                { text: "Dinâmicas práticas presenciais exclusivas", included: true, badge: "PRESENCIAL" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
+            />
+          </div>
+
+          {/* Individual */}
+          <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
+            <span className="w-6 h-px bg-gold inline-block" />
+            Carreira — Individual
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <PlanCard
+              badge="Individual · Online" badgeStyle="gold"
+              subtitle="Atendimento Exclusivo"
+              price="R$ 1.200" priceNote="2 encontros/mês · 3 meses"
+              headline="Acompanhamento focado no seu contexto, no seu ritmo."
+              description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada para o seu objetivo de carreira", included: true },
+                { text: "2 sessões individuais online por mês, exclusivas com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+                { text: "Frameworks e materiais exclusivos presenciais", included: false },
+              ]}
+            />
+            <PlanCard
+              badge="Recomendado" badgeStyle="blue"
+              subtitle="Individual · Presencial"
+              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 3 meses"
+              headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
+              description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado e acompanhado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada especificamente para o seu contexto e objetivo", included: true },
+                { text: "2 encontros presenciais individuais por mês, exclusivos com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Frameworks e materiais exclusivos não disponíveis nos planos coletivos", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+              ]}
+            />
+          </div>
+
+          <p className="text-xs text-muted italic mt-5 text-center">Todos os valores podem ser pagos à vista ou parcelados.</p>
+
+          {/* Personalize */}
+          <div className="mt-10 bg-gradient-to-br from-[#1e1640] to-[#1a1238] border border-gold/30 rounded-lg p-11 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <div className="flex items-start justify-between gap-10 flex-wrap">
+              <div className="flex-1 min-w-[260px]">
+                <div className="font-mono-label text-[9px] tracking-[0.25em] uppercase text-gold mb-4">✦ Personalizado</div>
+                <div className="font-display text-[26px] font-bold text-white mb-3">Personalize seu plano!</div>
+                <p className="text-sm text-foreground leading-relaxed max-w-[480px]">
+                  Nenhuma jornada é igual. Se você tem uma demanda específica, quer combinar formatos ou precisa de algo diferente do que as modalidades acima oferecem, entre em contato para construirmos juntas um plano sob medida para o seu momento.
+                </p>
+              </div>
+              <div className="flex items-center">
+                <BtnGold href="https://wa.me/5544991388809">Falar com Jenifer</BtnGold>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionSep />
+
+      {/* PRÓXIMOS PASSOS */}
+      <section className="py-24 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <SectionLabel>04 — Próximos Passos</SectionLabel>
+          <SectionTitle>Como <em className="italic text-gold">Começar</em></SectionTitle>
+          <div className="flex flex-col gap-2">
+            {[
+              { num: "I", title: "Entre em Contato", desc: "Acesse o WhatsApp para alinhar sua modalidade, condições e tirar dúvidas diretamente com Jenifer." },
+              { num: "II", title: "Diagnóstico Inicial", desc: "Realize o diagnóstico inicial para entendermos seu ponto de partida e personalizar o programa." },
+              { num: "III", title: "Confirme sua Vaga", desc: "Confirme a inscrição e inicie a imersão. As vagas são preenchidas por ordem de confirmação." },
+            ].map((step, i) => (
+              <div key={i} className="bg-surface border border-border-v rounded-lg px-9 py-7 flex items-center gap-8 transition-all hover:border-border hover:bg-surface2">
+                <div className="font-display text-[52px] font-bold italic text-gold-dim leading-none shrink-0 w-14 text-center">{step.num}</div>
+                <div>
+                  <div className="text-[15px] font-semibold text-white mb-1">{step.title}</div>
+                  <div className="text-[13px] text-muted">{step.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Vagas */}
+          <div className="mt-12 px-9 py-7 border border-gold/25 rounded-lg bg-gold-glow flex items-center gap-5 flex-col md:flex-row">
+            <div className="w-2.5 h-2.5 bg-gold rounded-full shrink-0 animate-pulse-dot" />
+            <div>
+              <strong className="block font-mono-label text-[10px] tracking-[0.15em] uppercase text-gold mb-1">Vagas Limitadas</strong>
+              <span className="text-[13px] text-foreground">O programa é desenhado para grupos pequenos e atendimento de qualidade. As vagas são preenchidas por ordem de confirmação.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MANIFESTO */}
+      <div className="pt-20 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <div className="bg-gradient-to-br from-[#1e1640] to-background border border-gold/35 rounded-lg px-14 py-[52px] text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-violet to-transparent" />
+            <p className="font-display text-[clamp(18px,2.5vw,26px)] font-normal italic text-white leading-relaxed max-w-[680px] mx-auto">
+              "Quanto mais IA, mais o humano importa.<br />
+              <span className="text-gold">Recorrência acelera. Consistência constrói. Coerência diferencia.</span>"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <SectionSep />
           <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
           <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
 

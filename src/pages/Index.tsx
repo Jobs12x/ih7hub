@@ -389,7 +389,7 @@ const Index = () => {
               headline="Aprenda IA com quem está no mesmo movimento que você."
               description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
-              vagas="10 vagas por turma"
+              vagas="até 10 alunos por turma"
               features={[
                 { text: "Diagnóstico de maturidade em IA (formato grupo)", included: true },
                 { text: "Relatório coletivo com nível de maturidade e direcionamentos gerais", included: true },
@@ -409,7 +409,7 @@ const Index = () => {
               headline="O método ao vivo, com a profundidade que só o presencial entrega."
               description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
-              vagas="8 vagas por turma"
+              vagas="até 5 alunos por turma"
               featured
               features={[
                 { text: "Diagnóstico de maturidade em IA com devolutiva ao vivo em grupo", included: true },

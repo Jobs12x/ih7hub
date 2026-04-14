@@ -125,82 +125,7 @@ const contentModules = [
   },
 ];
 
-const frameworkModules = [
-  {
-    number: "01", tag: "Fundação Humana · EPOCH", title: "O que a IA nunca vai ter",
-    short: "O que eu tenho que nenhum algoritmo replica?",
-    content: (
-      <>
-        <ul className="flex flex-col gap-2.5 pt-6 list-none">
-          {[
-            ["E — Empatia:", "Conexão emocional genuína e escuta real"],
-            ["P — Presença:", "Atenção plena e engajamento corporificado"],
-            ["O — Opinião:", "Julgamento contextual e perspectiva própria"],
-            ["C — Criatividade:", "Ruptura de padrões e inovação não-linear"],
-            ["H — Hope:", "Liderança por esperança e visão de futuro"],
-          ].map(([label, desc], i) => (
-            <li key={i} className="text-sm text-foreground flex gap-3 items-start leading-relaxed">
-              <span className="text-gold shrink-0 mt-0.5 text-[13px]">→</span>
-              <span><strong className="text-white">{label}</strong> {desc}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-6 px-5 py-4 border-l-2 border-gold bg-gold-glow rounded-r-md text-[13px] text-muted italic">
-          A pergunta não é "o que a IA pode fazer por mim?", é "o que eu preciso continuar fazendo para não perder o que me torna relevante?"
-        </div>
-      </>
-    ),
-  },
-  {
-    number: "02", tag: "Operação · Co-criação", title: "Como distribuir o trabalho",
-    short: "O que delegar para a IA sem abrir mão do pensamento crítico?",
-    content: (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
-        <div className="bg-gold-glow border border-border rounded-lg p-5">
-          <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-gold mb-2.5">✓ Delegue com segurança · Bloom 1–3</div>
-          <ul className="flex flex-col gap-1.5 list-none">
-            {["Síntese de grandes volumes", "Primeiras versões de textos", "Formatação e padronização", "Pesquisa exploratória", "Tarefas repetitivas"].map((t, i) => (
-              <li key={i} className="text-xs text-foreground">→ {t}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="bg-violet-dim border border-border-v rounded-lg p-5">
-          <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-violet mb-2.5">⊘ Retenha com rigor · Bloom 4–6</div>
-          <ul className="flex flex-col gap-1.5 list-none">
-            {["A hipótese inicial", "A curadoria do output", "O julgamento contextual", "A direção estratégica", "A responsabilidade pelo resultado"].map((t, i) => (
-              <li key={i} className="text-xs text-foreground">→ {t}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    ),
-  },
-  {
-    number: "03", tag: "Fluência · Bloom", title: "Em que nível você opera?",
-    short: "Como evoluir de usuária passiva a pensadora estratégica?",
-    content: (
-      <>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-6">
-          {[
-            { level: "Nível 1 · Iniciante", title: "Gerar respostas", bloom: "Bloom 1–3", desc: "IA age quase sozinha. Pergunta genérica, resposta genérica, aceitação sem filtro crítico." },
-            { level: "Nível 2 · Intermediário", title: "Refinar raciocínio", bloom: "Bloom 3–5", desc: "Usa IA para pensar melhor. Curadoria e direção ativas. Dialoga, não aceita passivamente." },
-            { level: "Nível 3 · Avançado", title: "Novas perguntas", bloom: "Bloom 5–6", desc: "Usa IA para questionar e inovar. Pensamento insubstituível conduz a IA, não o contrário." },
-          ].map((item, i) => (
-            <div key={i} className={`bg-surface2 border rounded-lg p-5 ${i === 2 ? 'border-gold/30' : 'border-border-v'}`}>
-              <div className={`font-mono-label text-[9px] tracking-[0.12em] uppercase mb-2 ${i === 2 ? 'text-gold' : 'text-muted'}`}>{item.level}</div>
-              <div className="font-display text-base font-semibold text-white mb-1.5">{item.title}</div>
-              <div className="text-[11px] text-gold italic mb-2">{item.bloom}</div>
-              <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-5 px-5 py-4 border-l-2 border-gold bg-gold-glow rounded-r-md text-[13px] text-muted italic">
-          Fluência não é usar mais IA. É saber onde você precisa pensar mais, não menos.
-        </div>
-      </>
-    ),
-  },
-];
+
 
 type PlanFeature = { text: string; included: boolean; badge?: string };
 
@@ -259,7 +184,7 @@ const Index = () => {
           <span className="text-xl font-semibold text-white tracking-wide">IH7</span>
         </a>
         <ul className="hidden md:flex gap-8 list-none">
-          {[["#", "Início"], ["#sobre", "Framework"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
+          {[["#", "Início"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
             <li key={href}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="text-[13px] font-medium text-muted tracking-[0.05em] uppercase no-underline transition-colors hover:text-gold">{label}</a></li>
           ))}
         </ul>
@@ -542,31 +467,8 @@ const Index = () => {
         </div>
       </div>
 
-      {/* IH-CORE FRAMEWORK */}
-      <section id="framework" className="py-24 relative z-[1]">
-        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
-          <SectionLabel>05 — Framework</SectionLabel>
-          <SectionTitle>IH-CORE: Co-criação <em className="italic text-gold">Humano-IA</em></SectionTitle>
-          <p className="text-sm text-muted mb-14 max-w-[560px]">O framework de ensino que estrutura a mentoria. Três camadas integradas que desenvolvem sua fluência em inteligência híbrida.</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-            {[
-              { num: "01", tag: "Fundação Humana · EPOCH", title: "O que a IA nunca vai ter", desc: "Empatia, Presença, Opinião, Criatividade e Hope, as cinco habilidades insubstituíveis que definem seu valor profissional." },
-              { num: "02", tag: "Operação · Co-criação", title: "Como distribuir o trabalho", desc: "Processos, IN, IH, IA e Ferramentas, os cinco eixos em que a inteligência híbrida opera na prática." },
-              { num: "03", tag: "Fluência · Bloom", title: "Em que nível você opera?", desc: "Da geração de respostas à criação de novas perguntas, um mapa de evolução cognitiva baseado na Taxonomia de Bloom." },
-            ].map((item, i) => (
-              <div key={i} className="bg-surface border border-border-v rounded-lg p-7 transition-all">
-                <div className="font-display text-[52px] font-bold italic text-gold/15 leading-none mb-4">{item.num}</div>
-                <div className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold mb-2.5">{item.tag}</div>
-                <div className="font-display text-lg font-semibold text-white mb-3">{item.title}</div>
-                <p className="text-[13px] text-foreground leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
 
-          <ModuleAccordion modules={frameworkModules} />
-        </div>
-      </section>
 
       <SectionSep />
 

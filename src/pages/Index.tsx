@@ -481,8 +481,8 @@ const Index = () => {
         </div>
       </div>
 
+
       <SectionSep />
-          <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
           <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
 
           {/* Coletiva */}

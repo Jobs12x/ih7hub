@@ -102,7 +102,7 @@ const FluencyQuiz = () => {
             {results[resultIdx].desc}
           </div>
           <a
-            href="https://wa.me/5544991388809"
+            href={`https://wa.me/5544991388809?text=${encodeURIComponent(`Olá Jenifer! Fiz o diagnóstico de fluência em IA e meu resultado foi: ${results[resultIdx].level}. ${results[resultIdx].desc}\n\nGostaria de saber mais sobre a mentoria IH7!`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-[26px] py-[13px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-gold text-bg-deep font-bold rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(38_48%_46%/0.3)]"

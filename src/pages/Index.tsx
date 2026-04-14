@@ -376,31 +376,100 @@ const Index = () => {
           <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
           <p className="text-[13px] text-muted mb-3">Duração: 5 meses · 2 encontros por mês · parcelado ou à vista</p>
 
-          {/* Trabalho & Negócios */}
+          {/* Coletiva */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
             <span className="w-6 h-px bg-gold inline-block" />
-            Trabalho &amp; Negócios — Coletiva ou Individual
+            Trabalho &amp; Negócios — Coletiva
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
-            <PlanCard badge="Coletiva · Online" price="R$ 599" tagline="Grupo pequeno · 2 encontros/mês"
-              features={["Diagnóstico de maturidade em IA personalizado","Relatório com nível de maturidade e plano de ação","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 sessões online ao vivo por mês, em grupo reduzido","Gravações de todas as sessões","Acesso ao WhatsApp da mentora (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Entrada" badgeStyle="gold"
+              subtitle="Coletiva · Online"
+              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              headline="Aprenda IA com quem está no mesmo movimento que você."
+              description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
+              vagas="10 vagas por turma"
+              features={[
+                { text: "Diagnóstico de maturidade em IA (formato grupo)", included: true },
+                { text: "Relatório coletivo com nível de maturidade e direcionamentos gerais", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 sessões ao vivo por mês em grupo reduzido (online)", included: true },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
             />
-            <PlanCard badge="✦ Coletiva · Ao Vivo" price="R$ 899" tagline="Grupo pequeno · 2 encontros/mês" featured
-              features={["Diagnóstico de maturidade em IA personalizado","Relatório com nível de maturidade e plano de ação","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 encontros presenciais ao vivo por mês, em grupo reduzido","Gravações de todas as sessões","Acesso ao WhatsApp da mentora (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="+ Presença" badgeStyle="green"
+              subtitle="Coletiva · Presencial"
+              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              headline="O método ao vivo, com a profundidade que só o presencial entrega."
+              description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
+              vagas="8 vagas por turma"
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA com devolutiva ao vivo em grupo", included: true },
+                { text: "Relatório coletivo com plano de ação e prioridades por perfil", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 encontros presenciais por mês em grupo reduzido", included: true },
+                { text: "Dinâmicas práticas presenciais exclusivas", included: true, badge: "PRESENCIAL" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
             />
           </div>
 
-          {/* Carreira */}
+          {/* Individual */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
             <span className="w-6 h-px bg-gold inline-block" />
             Carreira — Individual
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <PlanCard badge="Individual · Online" price="R$ 1.200" tagline="Atendimento exclusivo · 2 encontros/mês"
-              features={["Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira","Relatório personalizado com plano de ação revisado","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 sessões individuais online por mês, exclusivas com Jenifer","Gravações de todas as sessões","Prioridade de resposta no WhatsApp (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Individual · Online" badgeStyle="gold"
+              subtitle="Atendimento Exclusivo"
+              price="R$ 1.200" priceNote="2 encontros/mês · 5 meses"
+              headline="Acompanhamento focado no seu contexto, no seu ritmo."
+              description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada para o seu objetivo de carreira", included: true },
+                { text: "2 sessões individuais online por mês, exclusivas com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+                { text: "Frameworks e materiais exclusivos presenciais", included: false },
+              ]}
             />
-            <PlanCard badge="✦ Individual · Presencial" price="R$ 1.550" tagline="Atendimento exclusivo · 2 encontros/mês" featured
-              features={["Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira","Relatório personalizado com plano de ação revisado","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 encontros presenciais individuais por mês, exclusivos com Jenifer","Gravações de todas as sessões","Prioridade de resposta no WhatsApp (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Recomendado" badgeStyle="blue"
+              subtitle="Individual · Presencial"
+              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 5 meses"
+              headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
+              description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado e acompanhado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada especificamente para o seu contexto e objetivo", included: true },
+                { text: "2 encontros presenciais individuais por mês, exclusivos com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Frameworks e materiais exclusivos não disponíveis nos planos coletivos", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+              ]}
             />
           </div>
 

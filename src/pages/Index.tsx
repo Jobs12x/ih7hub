@@ -482,10 +482,46 @@ const Index = () => {
       </div>
 
 
-
       <SectionSep />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
+      {/* CTA FINAL */}
+      <section className="py-[120px] text-center relative z-[1]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,hsl(268_28%_52%/0.1)_0%,transparent_65%)] pointer-events-none" />
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9 relative">
+          <div className="font-mono-label text-[10px] tracking-[0.25em] uppercase text-gold mb-5">Pronta para começar?</div>
+          <h2 className="font-display text-[clamp(40px,5vw,62px)] font-bold text-white leading-[1.1] mb-5">
+            Inteligência que<br /><em className="italic text-gold">Transforma</em>
+          </h2>
+          <p className="text-[15px] text-muted max-w-[420px] mx-auto mb-11 leading-relaxed">
+            Não apenas entender IA, mas saber exatamente como ela se aplica na sua realidade.
+          </p>
+          <BtnGold href="https://wa.me/5544991388809">Falar com Jenifer</BtnGold>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-border py-11 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <div className="flex items-center justify-between flex-col md:flex-row gap-5 text-center md:text-left">
+            <div className="flex items-center gap-2.5">
+              <IH7Logo size={32} />
+              <div>
+                <div className="font-semibold text-base text-white">IH7</div>
+                <div className="font-mono-label text-[10px] tracking-[0.1em] text-muted">Inteligência que Transforma</div>
+              </div>
+            </div>
+            <div className="text-xs text-muted leading-relaxed md:text-right">
+              Jenifer Calvi — Fundadora & CEO<br />
+              © IH7 Hub · 2026
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Index;
             <PlanCard
               badge="Entrada" badgeStyle="gold"
               subtitle="Coletiva · Online"

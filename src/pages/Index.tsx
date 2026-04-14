@@ -125,8 +125,6 @@ const contentModules = [
   },
 ];
 
-
-
 type PlanFeature = { text: string; included: boolean; badge?: string };
 
 const PlanCard = ({ badge, badgeStyle, subtitle, price, priceNote, headline, description, features, cta, ctaHref, vagas, featured = false }: {
@@ -184,7 +182,7 @@ const Index = () => {
           <span className="text-xl font-semibold text-white tracking-wide">IH7</span>
         </a>
         <ul className="hidden md:flex gap-8 list-none">
-          {[["#", "Início"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
+          {[["#", "Início"], ["#modulos", "Conteúdo"], ["#teste", "Diagnóstico"], ["#investimento", "Investimento"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
             <li key={href}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="text-[13px] font-medium text-[#b8924e] tracking-[0.05em] uppercase no-underline transition-colors hover:text-white">{label}</a></li>
           ))}
         </ul>
@@ -225,7 +223,7 @@ const Index = () => {
               </div>
               <div className="flex flex-col">
                 {[
-                  ["5", "Meses de duração"],
+                  ["3", "Meses de duração"],
                   ["2×", "Encontros por mês"],
                   ["5", "Dimensões no diagnóstico de fluência"],
                   ["24h", "Retorno via WhatsApp direto"],
@@ -289,6 +287,20 @@ const Index = () => {
           <SectionLabel>02 — Conteúdo</SectionLabel>
           <SectionTitle>O Que Está <em className="italic text-gold">Incluído</em></SectionTitle>
           <ModuleAccordion modules={contentModules} />
+        </div>
+      </section>
+
+      <SectionSep />
+
+      {/* QUIZ */}
+      <section id="teste" className="py-24 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <div className="font-mono-label text-[10px] tracking-[0.25em] uppercase text-gold mb-5 flex items-center justify-center gap-3">Autodiagnóstico</div>
+          <h2 className="font-display text-[clamp(34px,4vw,52px)] font-bold text-white leading-tight mb-5 text-center">
+            Em que nível você <em className="italic text-gold">está hoje?</em>
+          </h2>
+          <p className="text-sm text-muted text-center mb-14 max-w-[460px] mx-auto">Três perguntas rápidas para identificar seu estágio de fluência em inteligência híbrida.</p>
+          <FluencyQuiz />
         </div>
       </section>
 
@@ -466,23 +478,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-
-
-
-
-      <SectionSep />
-
-      {/* QUIZ */}
-      <section id="teste" className="py-24 relative z-[1]">
-        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
-          <div className="font-mono-label text-[10px] tracking-[0.25em] uppercase text-gold mb-5 flex items-center justify-center gap-3">Autodiagnóstico</div>
-          <h2 className="font-display text-[clamp(34px,4vw,52px)] font-bold text-white leading-tight mb-5 text-center">
-            Em que nível você <em className="italic text-gold">está hoje?</em>
-          </h2>
-          <p className="text-sm text-muted text-center mb-14 max-w-[460px] mx-auto">Três perguntas rápidas para identificar seu estágio de fluência em inteligência híbrida.</p>
-          <FluencyQuiz />
-        </div>
-      </section>
 
       <SectionSep />
 

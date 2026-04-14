@@ -1,13 +1,176 @@
 import IH7Logo from "@/components/IH7Logo";
 import ModuleAccordion from "@/components/ModuleAccordion";
 import FluencyQuiz from "@/components/FluencyQuiz";
-import SectionLabel from "@/components/SectionLabel";
-import SectionTitle from "@/components/SectionTitle";
-import SectionSep from "@/components/SectionSep";
-import BtnGold from "@/components/BtnGold";
-import BtnOutline from "@/components/BtnOutline";
-import PlanCard from "@/components/PlanCard";
-import { contentModules } from "@/data/modules";
+
+const SectionLabel = ({ children }: { children: React.ReactNode }) => (
+  <div className="font-mono-label text-[10px] tracking-[0.25em] uppercase text-gold mb-5 flex items-center gap-3">
+    <span className="w-6 h-px bg-gold" />
+    {children}
+  </div>
+);
+
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="font-display text-[clamp(34px,4vw,52px)] font-bold text-white leading-tight mb-12">
+    {children}
+  </h2>
+);
+
+const SectionSep = () => (
+  <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent relative z-[1]" />
+);
+
+const BtnGold = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a
+    href={href}
+    target={href.startsWith("http") ? "_blank" : undefined}
+    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+    className="inline-flex items-center gap-2 px-[26px] py-[13px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-gold text-bg-deep font-bold rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(38_48%_46%/0.3)]"
+  >
+    {children}
+  </a>
+);
+
+const BtnOutline = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a
+    href={href}
+    className="inline-flex items-center gap-2 px-[26px] py-[13px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-transparent text-foreground border border-border-v rounded-md transition-all hover:border-gold hover:text-gold"
+  >
+    {children}
+  </a>
+);
+
+const contentModules = [
+  {
+    number: "01", tag: "Imersão", title: "Imersão em IA",
+    short: "Fundamentação prática sem jargão, com aplicação real",
+    content: (
+      <ul className="flex flex-col gap-2.5 pt-6 list-none">
+        {["Panorama atual de IA: o que está acontecendo, o que importa e o que é ruído",
+          "IA aplicada ao seu contexto: carreira, gestão, negócios e processos",
+          "Ferramentas e fluxos de trabalho com IA — uso estratégico, não superficial",
+          "Cases reais e exemplos práticos de adoção com resultados concretos",
+          "Como construir uma mentalidade orientada a IA sem perder a essência humana"
+        ].map((t, i) => (
+          <li key={i} className="text-sm text-foreground flex gap-3 items-start leading-relaxed">
+            <span className="text-gold shrink-0 mt-0.5 text-[13px]">→</span>{t}
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  {
+    number: "02", tag: "Diagnóstico", title: "Diagnóstico de Maturidade em IA",
+    short: "Framework estruturado — saber onde você está antes de agir",
+    content: (
+      <div className="pt-6">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold p-3 text-left border-b border-border bg-gold-glow">Dimensão</th>
+              <th className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold p-3 text-left border-b border-border bg-gold-glow">O que será mapeado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Conhecimento & Cultura", "Nível de familiaridade com IA e abertura da equipe ou organização para adoção"],
+              ["Ferramentas & Processos", "Quais ferramentas são usadas, como e com que frequência"],
+              ["Dados & Infraestrutura", "Capacidade de gerar, organizar e usar dados como insumo para decisões com IA"],
+              ["Estratégia & Governança", "Existência de políticas, critérios e visão de longo prazo para uso de IA"],
+              ["Resultado & Impacto", "Evidências de resultados gerados por IA e capacidade de medir impacto"],
+            ].map(([dim, desc], i) => (
+              <tr key={i} className="hover:bg-gold-glow transition-colors">
+                <td className="p-4 text-xs font-semibold text-white whitespace-nowrap w-[220px] border-b border-gold/[0.06]">{dim}</td>
+                <td className="p-4 text-[13px] text-foreground border-b border-gold/[0.06]">{desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ),
+  },
+  {
+    number: "03", tag: "Ao Vivo", title: "Mentorias ao Vivo em Grupo",
+    short: "Sessões mensais de 90 minutos com grupos reduzidos",
+    content: (
+      <ul className="flex flex-col gap-2.5 pt-6 list-none">
+        {["Sessões mensais ao vivo com duração de 90 minutos",
+          "Grupos pequenos para garantir atenção e qualidade nas interações",
+          "Discussão de cases, dúvidas e aplicações práticas do conteúdo da imersão",
+          "Gravações disponíveis para revisão posterior",
+          "Ambiente de troca entre pares com perfis complementares"
+        ].map((t, i) => (
+          <li key={i} className="text-sm text-foreground flex gap-3 items-start leading-relaxed">
+            <span className="text-gold shrink-0 mt-0.5 text-[13px]">→</span>{t}
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  {
+    number: "04", tag: "Acesso Direto", title: "WhatsApp com a Mentora",
+    short: "Canal direto durante todo o período, sem intermediários",
+    content: (
+      <ul className="flex flex-col gap-2.5 pt-6 list-none">
+        {["Acesso via WhatsApp durante todo o período da mentoria",
+          "Respostas em dias úteis com retorno em até 24 horas",
+          "Ideal para ajustes rápidos, validação de decisões e desbloqueio de dúvidas práticas",
+          "Conexão direta com a mentora, sem intermediários"
+        ].map((t, i) => (
+          <li key={i} className="text-sm text-foreground flex gap-3 items-start leading-relaxed">
+            <span className="text-gold shrink-0 mt-0.5 text-[13px]">→</span>{t}
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+];
+
+type PlanFeature = { text: string; included: boolean; badge?: string };
+
+const PlanCard = ({ badge, badgeStyle, subtitle, price, priceNote, headline, description, features, cta, ctaHref, vagas, featured = false }: {
+  badge: string; badgeStyle?: "gold" | "green" | "blue"; subtitle?: string; price: string; priceNote: string; headline: string; description: string; features: PlanFeature[]; cta: string; ctaHref: string; vagas?: string; featured?: boolean;
+}) => (
+  <div className={`bg-surface border rounded-lg relative overflow-hidden flex flex-col ${featured ? 'border-primary/40 bg-gradient-to-br from-[#231847] to-[#1a1238]' : 'border-border-v'}`}>
+    {featured && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />}
+    <div className="p-8 pb-0 flex-1">
+      <div className={`inline-block text-[10px] tracking-[0.15em] uppercase font-mono-label px-3 py-1 rounded mb-4 ${
+        badgeStyle === "green" ? "bg-[#2a6b3a]/30 text-[#6fcf7c] border border-[#6fcf7c]/30" :
+        badgeStyle === "blue" ? "bg-primary/20 text-accent-foreground border border-accent/40" :
+        "bg-surface2 text-muted border border-border-v"
+      }`}>{badge}</div>
+      {subtitle && <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-muted mb-1">{subtitle}</div>}
+      <div className="font-display text-[48px] font-bold text-white tracking-tight leading-none mb-1">{price}</div>
+      <div className="text-[13px] text-gold italic mb-4">{priceNote}</div>
+      <p className="text-[15px] text-white font-semibold mb-1.5">{headline}</p>
+      <p className="text-[13px] text-muted leading-relaxed mb-6">{description}</p>
+
+      <div className="h-px bg-border mb-5" />
+      <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-muted mb-4">Entregáveis</div>
+      <ul className="flex flex-col gap-3 list-none mb-8">
+        {features.map((f, i) => (
+          <li key={i} className={`text-[13px] flex gap-2.5 items-start leading-snug ${f.included ? 'text-foreground' : 'text-muted/50 line-through'}`}>
+            <span className={`shrink-0 mt-0.5 text-sm ${f.included ? 'text-[#6fcf7c]' : 'text-muted/40'}`}>{f.included ? '✓' : '✕'}</span>
+            <span className="flex-1">
+              {f.text}
+              {f.badge && <span className={`ml-2 inline-block text-[9px] tracking-[0.1em] uppercase font-mono-label px-1.5 py-0.5 rounded ${
+                f.badge === "PRESENCIAL" ? "bg-gold/20 text-gold" :
+                f.badge === "EXCLUSIVO" ? "bg-[#2a6b3a]/30 text-[#6fcf7c]" :
+                "bg-accent/20 text-accent-foreground"
+              }`}>{f.badge}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div className="p-8 pt-0">
+      <a href={ctaHref} target="_blank" rel="noopener noreferrer"
+        className="block w-full text-center px-6 py-3.5 font-mono-label text-[11px] tracking-[0.12em] uppercase bg-surface2 text-white border border-border-v rounded-md transition-all hover:border-gold hover:text-gold">
+        {cta} <span className="ml-1">↗</span>
+      </a>
+      {vagas && <p className="text-[12px] text-muted text-center mt-3"><strong className="text-white">{vagas.split(" ")[0]}</strong> {vagas.split(" ").slice(1).join(" ")}</p>}
+    </div>
+  </div>
+);
 
 const Index = () => {
   return (
@@ -60,7 +223,7 @@ const Index = () => {
               </div>
               <div className="flex flex-col">
                 {[
-                  ["5", "Meses de duração"],
+                  ["3", "Meses de duração"],
                   ["2×", "Encontros por mês"],
                   ["5", "Dimensões no diagnóstico de fluência"],
                   ["24h", "Retorno via WhatsApp direto"],
@@ -229,7 +392,7 @@ const Index = () => {
               badge="Recomendado" badgeStyle="blue"
               subtitle="Individual · Presencial"
               price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 3 meses"
-              headline="Para quem não quer só aprender IA. Quer liderar com ela."
+              headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
               description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."
               featured

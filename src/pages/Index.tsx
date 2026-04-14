@@ -202,23 +202,50 @@ const frameworkModules = [
   },
 ];
 
-const PlanCard = ({ badge, price, tagline, features, featured = false }: {
-  badge: string; price: string; tagline: string; features: string[]; featured?: boolean;
+type PlanFeature = { text: string; included: boolean; badge?: string };
+
+const PlanCard = ({ badge, badgeStyle, subtitle, price, priceNote, headline, description, features, cta, ctaHref, vagas, featured = false }: {
+  badge: string; badgeStyle?: "gold" | "green" | "blue"; subtitle?: string; price: string; priceNote: string; headline: string; description: string; features: PlanFeature[]; cta: string; ctaHref: string; vagas?: string; featured?: boolean;
 }) => (
-  <div className={`bg-surface border rounded-lg p-9 relative overflow-hidden transition-colors ${featured ? 'border-border bg-gradient-to-br from-[#231847] to-[#1a1238]' : 'border-border-v hover:border-border'}`}>
+  <div className={`bg-surface border rounded-lg relative overflow-hidden flex flex-col ${featured ? 'border-primary/40 bg-gradient-to-br from-[#231847] to-[#1a1238]' : 'border-border-v'}`}>
     {featured && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />}
-    <div className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold mb-5 flex items-center gap-1.5">{badge}</div>
-    <div className="font-display text-[38px] font-bold text-white tracking-tight mb-1.5">{price}</div>
-    <div className="font-display italic text-[15px] text-muted mb-8">{tagline}</div>
-    <div className="h-px bg-border mb-7" />
-    <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-gold mb-3.5">Entregáveis</div>
-    <ul className="flex flex-col gap-[11px] list-none">
-      {features.map((f, i) => (
-        <li key={i} className="text-[13px] text-foreground flex gap-2.5 items-start leading-snug">
-          <span className="text-gold font-bold shrink-0 mt-0.5">✓</span>{f}
-        </li>
-      ))}
-    </ul>
+    <div className="p-8 pb-0 flex-1">
+      <div className={`inline-block text-[10px] tracking-[0.15em] uppercase font-mono-label px-3 py-1 rounded mb-4 ${
+        badgeStyle === "green" ? "bg-[#2a6b3a]/30 text-[#6fcf7c] border border-[#6fcf7c]/30" :
+        badgeStyle === "blue" ? "bg-primary/20 text-accent-foreground border border-accent/40" :
+        "bg-surface2 text-muted border border-border-v"
+      }`}>{badge}</div>
+      {subtitle && <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-muted mb-1">{subtitle}</div>}
+      <div className="font-display text-[48px] font-bold text-white tracking-tight leading-none mb-1">{price}</div>
+      <div className="text-[13px] text-gold italic mb-4">{priceNote}</div>
+      <p className="text-[15px] text-white font-semibold mb-1.5">{headline}</p>
+      <p className="text-[13px] text-muted leading-relaxed mb-6">{description}</p>
+
+      <div className="h-px bg-border mb-5" />
+      <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-muted mb-4">Entregáveis</div>
+      <ul className="flex flex-col gap-3 list-none mb-8">
+        {features.map((f, i) => (
+          <li key={i} className={`text-[13px] flex gap-2.5 items-start leading-snug ${f.included ? 'text-foreground' : 'text-muted/50 line-through'}`}>
+            <span className={`shrink-0 mt-0.5 text-sm ${f.included ? 'text-[#6fcf7c]' : 'text-muted/40'}`}>{f.included ? '✓' : '✕'}</span>
+            <span className="flex-1">
+              {f.text}
+              {f.badge && <span className={`ml-2 inline-block text-[9px] tracking-[0.1em] uppercase font-mono-label px-1.5 py-0.5 rounded ${
+                f.badge === "PRESENCIAL" ? "bg-gold/20 text-gold" :
+                f.badge === "EXCLUSIVO" ? "bg-[#2a6b3a]/30 text-[#6fcf7c]" :
+                "bg-accent/20 text-accent-foreground"
+              }`}>{f.badge}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div className="p-8 pt-0">
+      <a href={ctaHref} target="_blank" rel="noopener noreferrer"
+        className="block w-full text-center px-6 py-3.5 font-mono-label text-[11px] tracking-[0.12em] uppercase bg-surface2 text-white border border-border-v rounded-md transition-all hover:border-gold hover:text-gold">
+        {cta} <span className="ml-1">↗</span>
+      </a>
+      {vagas && <p className="text-[12px] text-muted text-center mt-3"><strong className="text-white">{vagas.split(" ")[0]}</strong> {vagas.split(" ").slice(1).join(" ")}</p>}
+    </div>
   </div>
 );
 

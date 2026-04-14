@@ -184,7 +184,7 @@ const Index = () => {
           <span className="text-xl font-semibold text-white tracking-wide">IH7</span>
         </a>
         <ul className="hidden md:flex gap-8 list-none">
-          {[["#", "Início"], ["#modulos", "Conteúdo"], ["#investimento", "Investimento"], ["#teste", "Diagnóstico"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
+          {[["#", "Início"], ["#modulos", "Conteúdo"], ["#teste", "Diagnóstico"], ["#investimento", "Investimento"], ["https://wa.me/5544991388809", "Contato"]].map(([href, label]) => (
             <li key={href}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="text-[13px] font-medium text-[#b8924e] tracking-[0.05em] uppercase no-underline transition-colors hover:text-white">{label}</a></li>
           ))}
         </ul>

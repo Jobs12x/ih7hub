@@ -202,23 +202,50 @@ const frameworkModules = [
   },
 ];
 
-const PlanCard = ({ badge, price, tagline, features, featured = false }: {
-  badge: string; price: string; tagline: string; features: string[]; featured?: boolean;
+type PlanFeature = { text: string; included: boolean; badge?: string };
+
+const PlanCard = ({ badge, badgeStyle, subtitle, price, priceNote, headline, description, features, cta, ctaHref, vagas, featured = false }: {
+  badge: string; badgeStyle?: "gold" | "green" | "blue"; subtitle?: string; price: string; priceNote: string; headline: string; description: string; features: PlanFeature[]; cta: string; ctaHref: string; vagas?: string; featured?: boolean;
 }) => (
-  <div className={`bg-surface border rounded-lg p-9 relative overflow-hidden transition-colors ${featured ? 'border-border bg-gradient-to-br from-[#231847] to-[#1a1238]' : 'border-border-v hover:border-border'}`}>
+  <div className={`bg-surface border rounded-lg relative overflow-hidden flex flex-col ${featured ? 'border-primary/40 bg-gradient-to-br from-[#231847] to-[#1a1238]' : 'border-border-v'}`}>
     {featured && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />}
-    <div className="font-mono-label text-[9px] tracking-[0.2em] uppercase text-gold mb-5 flex items-center gap-1.5">{badge}</div>
-    <div className="font-display text-[38px] font-bold text-white tracking-tight mb-1.5">{price}</div>
-    <div className="font-display italic text-[15px] text-muted mb-8">{tagline}</div>
-    <div className="h-px bg-border mb-7" />
-    <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-gold mb-3.5">Entregáveis</div>
-    <ul className="flex flex-col gap-[11px] list-none">
-      {features.map((f, i) => (
-        <li key={i} className="text-[13px] text-foreground flex gap-2.5 items-start leading-snug">
-          <span className="text-gold font-bold shrink-0 mt-0.5">✓</span>{f}
-        </li>
-      ))}
-    </ul>
+    <div className="p-8 pb-0 flex-1">
+      <div className={`inline-block text-[10px] tracking-[0.15em] uppercase font-mono-label px-3 py-1 rounded mb-4 ${
+        badgeStyle === "green" ? "bg-[#2a6b3a]/30 text-[#6fcf7c] border border-[#6fcf7c]/30" :
+        badgeStyle === "blue" ? "bg-primary/20 text-accent-foreground border border-accent/40" :
+        "bg-surface2 text-muted border border-border-v"
+      }`}>{badge}</div>
+      {subtitle && <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-muted mb-1">{subtitle}</div>}
+      <div className="font-display text-[48px] font-bold text-white tracking-tight leading-none mb-1">{price}</div>
+      <div className="text-[13px] text-gold italic mb-4">{priceNote}</div>
+      <p className="text-[15px] text-white font-semibold mb-1.5">{headline}</p>
+      <p className="text-[13px] text-muted leading-relaxed mb-6">{description}</p>
+
+      <div className="h-px bg-border mb-5" />
+      <div className="font-mono-label text-[9px] tracking-[0.15em] uppercase text-muted mb-4">Entregáveis</div>
+      <ul className="flex flex-col gap-3 list-none mb-8">
+        {features.map((f, i) => (
+          <li key={i} className={`text-[13px] flex gap-2.5 items-start leading-snug ${f.included ? 'text-foreground' : 'text-muted/50 line-through'}`}>
+            <span className={`shrink-0 mt-0.5 text-sm ${f.included ? 'text-[#6fcf7c]' : 'text-muted/40'}`}>{f.included ? '✓' : '✕'}</span>
+            <span className="flex-1">
+              {f.text}
+              {f.badge && <span className={`ml-2 inline-block text-[9px] tracking-[0.1em] uppercase font-mono-label px-1.5 py-0.5 rounded ${
+                f.badge === "PRESENCIAL" ? "bg-gold/20 text-gold" :
+                f.badge === "EXCLUSIVO" ? "bg-[#2a6b3a]/30 text-[#6fcf7c]" :
+                "bg-accent/20 text-accent-foreground"
+              }`}>{f.badge}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div className="p-8 pt-0">
+      <a href={ctaHref} target="_blank" rel="noopener noreferrer"
+        className="block w-full text-center px-6 py-3.5 font-mono-label text-[11px] tracking-[0.12em] uppercase bg-surface2 text-white border border-border-v rounded-md transition-all hover:border-gold hover:text-gold">
+        {cta} <span className="ml-1">↗</span>
+      </a>
+      {vagas && <p className="text-[12px] text-muted text-center mt-3"><strong className="text-white">{vagas.split(" ")[0]}</strong> {vagas.split(" ").slice(1).join(" ")}</p>}
+    </div>
   </div>
 );
 
@@ -349,31 +376,100 @@ const Index = () => {
           <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
           <p className="text-[13px] text-muted mb-3">Duração: 5 meses · 2 encontros por mês · parcelado ou à vista</p>
 
-          {/* Trabalho & Negócios */}
+          {/* Coletiva */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
             <span className="w-6 h-px bg-gold inline-block" />
-            Trabalho &amp; Negócios — Coletiva ou Individual
+            Trabalho &amp; Negócios — Coletiva
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
-            <PlanCard badge="Coletiva · Online" price="R$ 599" tagline="Grupo pequeno · 2 encontros/mês"
-              features={["Diagnóstico de maturidade em IA personalizado","Relatório com nível de maturidade e plano de ação","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 sessões online ao vivo por mês, em grupo reduzido","Gravações de todas as sessões","Acesso ao WhatsApp da mentora (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Entrada" badgeStyle="gold"
+              subtitle="Coletiva · Online"
+              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              headline="Aprenda IA com quem está no mesmo movimento que você."
+              description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
+              vagas="10 vagas por turma"
+              features={[
+                { text: "Diagnóstico de maturidade em IA (formato grupo)", included: true },
+                { text: "Relatório coletivo com nível de maturidade e direcionamentos gerais", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 sessões ao vivo por mês em grupo reduzido (online)", included: true },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
             />
-            <PlanCard badge="✦ Coletiva · Ao Vivo" price="R$ 899" tagline="Grupo pequeno · 2 encontros/mês" featured
-              features={["Diagnóstico de maturidade em IA personalizado","Relatório com nível de maturidade e plano de ação","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 encontros presenciais ao vivo por mês, em grupo reduzido","Gravações de todas as sessões","Acesso ao WhatsApp da mentora (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="+ Presença" badgeStyle="green"
+              subtitle="Coletiva · Presencial"
+              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 5 meses"
+              headline="O método ao vivo, com a profundidade que só o presencial entrega."
+              description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
+              cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
+              vagas="8 vagas por turma"
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA com devolutiva ao vivo em grupo", included: true },
+                { text: "Relatório coletivo com plano de ação e prioridades por perfil", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA curada por contexto de atuação", included: true },
+                { text: "2 encontros presenciais por mês em grupo reduzido", included: true },
+                { text: "Dinâmicas práticas presenciais exclusivas", included: true, badge: "PRESENCIAL" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Acesso ao WhatsApp da mentora (dias úteis, até 24h)", included: true },
+                { text: "Revisão de entregas entre sessões", included: false },
+                { text: "Plano de ação individualizado", included: false },
+              ]}
             />
           </div>
 
-          {/* Carreira */}
+          {/* Individual */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">
             <span className="w-6 h-px bg-gold inline-block" />
             Carreira — Individual
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <PlanCard badge="Individual · Online" price="R$ 1.200" tagline="Atendimento exclusivo · 2 encontros/mês"
-              features={["Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira","Relatório personalizado com plano de ação revisado","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 sessões individuais online por mês, exclusivas com Jenifer","Gravações de todas as sessões","Prioridade de resposta no WhatsApp (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Individual · Online" badgeStyle="gold"
+              subtitle="Atendimento Exclusivo"
+              price="R$ 1.200" priceNote="2 encontros/mês · 5 meses"
+              headline="Acompanhamento focado no seu contexto, no seu ritmo."
+              description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada para o seu objetivo de carreira", included: true },
+                { text: "2 sessões individuais online por mês, exclusivas com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+                { text: "Frameworks e materiais exclusivos presenciais", included: false },
+              ]}
             />
-            <PlanCard badge="✦ Individual · Presencial" price="R$ 1.550" tagline="Atendimento exclusivo · 2 encontros/mês" featured
-              features={["Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira","Relatório personalizado com plano de ação revisado","Módulo completo de inteligência híbrida aplicada","Stack de ferramentas de IA selecionada para o seu contexto","2 encontros presenciais individuais por mês, exclusivos com Jenifer","Gravações de todas as sessões","Prioridade de resposta no WhatsApp (dias úteis, até 24h)"]}
+            <PlanCard
+              badge="Recomendado" badgeStyle="blue"
+              subtitle="Individual · Presencial"
+              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 5 meses"
+              headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
+              description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
+              cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."
+              featured
+              features={[
+                { text: "Diagnóstico de maturidade em IA aprofundado, com foco no seu contexto de carreira", included: true },
+                { text: "Relatório personalizado com plano de ação revisado e acompanhado ao longo do programa", included: true },
+                { text: "Módulo completo de inteligência híbrida aplicada", included: true },
+                { text: "Stack de ferramentas de IA selecionada especificamente para o seu contexto e objetivo", included: true },
+                { text: "2 encontros presenciais individuais por mês, exclusivos com Jenifer", included: true },
+                { text: "Revisão de aplicações e entregas entre as sessões", included: true, badge: "EXCLUSIVO" },
+                { text: "Frameworks e materiais exclusivos não disponíveis nos planos coletivos", included: true, badge: "EXCLUSIVO" },
+                { text: "Gravações de todas as sessões", included: true },
+                { text: "Prioridade de resposta no WhatsApp (dias úteis, até 24h)", included: true },
+              ]}
             />
           </div>
 

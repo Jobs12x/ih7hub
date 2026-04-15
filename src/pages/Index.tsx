@@ -341,7 +341,7 @@ const Index = () => {
             <PlanCard
               badge="Entrada" badgeStyle="gold"
               subtitle="Coletiva · Online"
-              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              price="R$ 599" priceNote="5% de desconto no Pix ou 5× de R$ 126,00"
               headline="Aprenda IA com quem está no mesmo movimento que você."
               description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."
@@ -361,7 +361,7 @@ const Index = () => {
             <PlanCard
               badge="+ Presença" badgeStyle="green"
               subtitle="Coletiva · Presencial"
-              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              price="R$ 899" priceNote="5% de desconto no Pix ou 5× de R$ 189,00"
               headline="O método ao vivo, com a profundidade que só o presencial entrega."
               description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."
@@ -391,7 +391,7 @@ const Index = () => {
             <PlanCard
               badge="Individual · Online" badgeStyle="gold"
               subtitle="Atendimento Exclusivo"
-              price="R$ 1.200" priceNote="2 encontros/mês · 3 meses"
+              price="R$ 1.200" priceNote="5% de desconto no Pix ou 5× de R$ 252,00"
               headline="Acompanhamento focado no seu contexto, no seu ritmo."
               description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."
@@ -410,7 +410,7 @@ const Index = () => {
             <PlanCard
               badge="Recomendado" badgeStyle="blue"
               subtitle="Individual · Presencial"
-              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 3 meses"
+              price="R$ 1.550" priceNote="5% de desconto no Pix ou 5× de R$ 325,00"
               headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
               description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."
@@ -460,8 +460,10 @@ const Index = () => {
           <div className="flex flex-col gap-2">
             {[
               { num: "I", title: "Entre em Contato", desc: "Acesse o WhatsApp para alinhar sua modalidade, condições e tirar dúvidas diretamente com Jenifer." },
-              { num: "II", title: "Diagnóstico Inicial", desc: "Realize o diagnóstico inicial para entendermos seu ponto de partida e personalizar o programa." },
-              { num: "III", title: "Confirme sua Vaga", desc: "Confirme a inscrição e inicie a imersão. As vagas são preenchidas por ordem de confirmação." },
+              { num: "II", title: "Assessment", desc: "Realizamos uma avaliação inicial para entender seu momento, contexto e objetivos." },
+              { num: "III", title: "Imersão para Nivelar Conhecimentos", desc: "Passamos por uma imersão para alinhar conceitos e garantir uma base sólida antes de avançar." },
+              { num: "IV", title: "Escolha do Melhor Plano", desc: "Com base no assessment e na imersão, definimos juntas o plano mais adequado para você." },
+              { num: "V", title: "Confirmação da Vaga", desc: "Confirme a inscrição e inicie sua jornada. As vagas são preenchidas por ordem de confirmação." },
             ].map((step, i) => (
               <div key={i} className="bg-surface border border-border-v rounded-lg px-9 py-7 flex items-center gap-8 transition-all hover:border-border hover:bg-surface2">
                 <div className="font-display text-[52px] font-bold italic text-gold-dim leading-none shrink-0 w-14 text-center">{step.num}</div>

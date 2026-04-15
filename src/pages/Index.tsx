@@ -341,7 +341,7 @@ const Index = () => {
             <PlanCard
               badge="Entrada" badgeStyle="gold"
               subtitle="Coletiva · Online"
-              price="R$ 599" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              price="R$ 599" priceNote="5% de desconto no Pix ou 5× de R$ 126,00"
               headline="Aprenda IA com quem está no mesmo movimento que você."
               description="Método estruturado, troca entre pares e orientação ao vivo — para sair do zero e começar a aplicar."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Online."

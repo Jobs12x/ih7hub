@@ -460,8 +460,10 @@ const Index = () => {
           <div className="flex flex-col gap-2">
             {[
               { num: "I", title: "Entre em Contato", desc: "Acesse o WhatsApp para alinhar sua modalidade, condições e tirar dúvidas diretamente com Jenifer." },
-              { num: "II", title: "Diagnóstico Inicial", desc: "Realize o diagnóstico inicial para entendermos seu ponto de partida e personalizar o programa." },
-              { num: "III", title: "Confirme sua Vaga", desc: "Confirme a inscrição e inicie a imersão. As vagas são preenchidas por ordem de confirmação." },
+              { num: "II", title: "Assessment", desc: "Realizamos uma avaliação inicial para entender seu momento, contexto e objetivos." },
+              { num: "III", title: "Imersão para Nivelar Conhecimentos", desc: "Passamos por uma imersão para alinhar conceitos e garantir uma base sólida antes de avançar." },
+              { num: "IV", title: "Escolha do Melhor Plano", desc: "Com base no assessment e na imersão, definimos juntas o plano mais adequado para você." },
+              { num: "V", title: "Confirmação da Vaga", desc: "Confirme a inscrição e inicie sua jornada. As vagas são preenchidas por ordem de confirmação." },
             ].map((step, i) => (
               <div key={i} className="bg-surface border border-border-v rounded-lg px-9 py-7 flex items-center gap-8 transition-all hover:border-border hover:bg-surface2">
                 <div className="font-display text-[52px] font-bold italic text-gold-dim leading-none shrink-0 w-14 text-center">{step.num}</div>

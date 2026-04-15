@@ -391,7 +391,7 @@ const Index = () => {
             <PlanCard
               badge="Individual · Online" badgeStyle="gold"
               subtitle="Atendimento Exclusivo"
-              price="R$ 1.200" priceNote="2 encontros/mês · 3 meses"
+              price="R$ 1.200" priceNote="5% de desconto no Pix ou 5× de R$ 252,00"
               headline="Acompanhamento focado no seu contexto, no seu ritmo."
               description="Sessões individuais com a Jeni para aplicar IA com intencionalidade na sua carreira — sem adaptação para grupo."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Online."

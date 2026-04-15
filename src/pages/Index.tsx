@@ -410,7 +410,7 @@ const Index = () => {
             <PlanCard
               badge="Recomendado" badgeStyle="blue"
               subtitle="Individual · Presencial"
-              price="R$ 1.550" priceNote="Atendimento exclusivo · 2 encontros/mês · 3 meses"
+              price="R$ 1.550" priceNote="5% de desconto no Pix ou 5× de R$ 325,00"
               headline={`"Para quem não quer só aprender IA. Quer liderar com ela."`}
               description="Máxima personalização, acompanhamento entre sessões e acesso a materiais exclusivos — para quem decidiu que IA vai ser uma vantagem competitiva real."
               cta="Quero garantir minha vaga" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Individual%20Presencial."

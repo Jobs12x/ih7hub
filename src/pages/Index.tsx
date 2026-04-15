@@ -214,7 +214,6 @@ const Index = () => {
                 <div className="grid grid-cols-2 md:grid-cols-[1fr_1fr_1fr_1fr_1fr] items-stretch">
                   <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-border col-span-2 md:col-span-1 flex flex-col justify-center">
                     <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-1">Mentoria IH7</div>
-                    <div className="font-display text-[20px] font-semibold text-white">Jenifer Calvi</div>
                   </div>
                   {[
                     ["3", "Meses de duração"],
@@ -234,6 +233,27 @@ const Index = () => {
                 <BtnGold href="#investimento">Ver modalidades</BtnGold>
                 <BtnOutline href="#modulos">O que inclui</BtnOutline>
               </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionSep />
+
+      {/* SOBRE A MENTORA */}
+      <section className="py-24 relative z-[1]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-9">
+          <SectionLabel>Sobre a Mentora</SectionLabel>
+          <SectionTitle>Jenifer <em className="italic text-gold">Calvi</em></SectionTitle>
+          <div className="space-y-5 text-sm text-foreground leading-relaxed max-w-[820px]">
+            <p>
+              Executiva de negócios e especialista em IA e inovação, com mais de 13 anos de experiência em educação digital e tecnologia. Atua na transformação da inteligência artificial em estratégia de crescimento por meio da Inteligência Híbrida, conectando capacidades humanas, dados e tecnologia para gerar resultados reais e escaláveis.
+            </p>
+            <p>
+              Fundadora da <strong className="text-white">IH7 Educação Digital | IA para Negócios, Trabalho & Carreira</strong>. Mestre em Gestão do Conhecimento, com pesquisa em inteligência híbrida: cocriação humano-IA.
+            </p>
+            <p>
+              Lidera iniciativas de inovação, tecnologia e IA aplicada. Como mentora, pesquisadora e educadora, promove a fluência em IA e apoia líderes, profissionais e organizações na adoção estratégica da IA, estruturando gestão do conhecimento, estratégia, GTM | operações de receita, transformação digital para impulsionar desenvolvimento, eficiência, crescimento e geração de valor.
+            </p>
           </div>
         </div>
       </section>

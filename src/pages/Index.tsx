@@ -361,7 +361,7 @@ const Index = () => {
             <PlanCard
               badge="+ Presença" badgeStyle="green"
               subtitle="Coletiva · Presencial"
-              price="R$ 899" priceNote="Grupo pequeno · 2 encontros/mês · 3 meses"
+              price="R$ 899" priceNote="5% de desconto no Pix ou 5× de R$ 189,00"
               headline="O método ao vivo, com a profundidade que só o presencial entrega."
               description="Dinâmicas práticas, troca real entre pares e a energia de estar na sala — para quem aprende melhor em presença."
               cta="Quero começar" ctaHref="https://wa.me/5544991388809?text=Ol%C3%A1%20Jenifer!%20Tenho%20interesse%20no%20plano%20Coletiva%20Presencial."

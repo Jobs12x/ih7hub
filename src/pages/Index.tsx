@@ -191,17 +191,16 @@ const Index = () => {
       {/* HERO */}
       <section className="min-h-screen flex items-center pt-24 pb-20 relative z-[1]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-9 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12 lg:gap-[72px] items-center">
-            <div>
+          <div>
               <div className="font-mono-label text-[11px] tracking-[0.2em] uppercase text-gold mb-7 flex items-center gap-2.5 animate-fade-up-1">
                 <span className="w-7 h-px bg-gold" />
                 Proposta de Mentoria · 2026
               </div>
               <h1 className="font-display text-[clamp(44px,5.5vw,68px)] font-bold text-white leading-[1.1] mb-3 animate-fade-up-2">
-                Inteligência Híbrida <em className="italic text-gold">Aplicada:</em><br />Fluência em IA
+                Inteligência Híbrida <em className="italic text-gold">Aplicada:</em> Fluência em IA
               </h1>
               <p className="font-display italic text-lg text-muted mb-8 animate-fade-up-3">IA que amplia. Humano que lidera.</p>
-              <div className="flex flex-col gap-3 animate-fade-up-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 animate-fade-up-3">
                 <div className="bg-surface border border-border-v rounded-[10px] px-6 py-5 text-sm text-foreground leading-relaxed">
                   Um programa que vai além do básico, não apenas para entender o que é Inteligência Artificial, mas para saber como ela se aplica na realidade do seu negócio, no seu trabalho ou no seu dia a dia, com clareza de onde partir e direção estratégica.
                 </div>
@@ -209,32 +208,32 @@ const Index = () => {
                   Co-criar com IA é ampliar a inteligência humana, aprofundar conhecimentos e construir fluência real em IA. Na mentoria você terá um acompanhamento para usar IA como um recurso.
                 </div>
               </div>
+
+              {/* HERO CARD - horizontal */}
+              <div className="bg-surface border border-border rounded-lg overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.4)] animate-fade-up-4 mt-8">
+                <div className="grid grid-cols-2 md:grid-cols-[1fr_1fr_1fr_1fr_1fr] items-stretch">
+                  <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-border col-span-2 md:col-span-1 flex flex-col justify-center">
+                    <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-1">Mentoria IH7</div>
+                    <div className="font-display text-[20px] font-semibold text-white">Jenifer Calvi</div>
+                  </div>
+                  {[
+                    ["3", "Meses de duração"],
+                    ["2×", "Encontros por mês"],
+                    ["5", "Dimensões no diagnóstico de fluência"],
+                    ["24h", "Retorno via WhatsApp direto"],
+                  ].map(([num, label], i) => (
+                    <div key={i} className="px-6 py-5 border-b md:border-b-0 md:border-r last:border-r-0 border-gold/[0.08] flex items-center gap-4 transition-colors hover:bg-gold-glow">
+                      <div className="font-display text-[28px] font-bold text-gold leading-none">{num}</div>
+                      <div className="font-mono-label text-[9px] tracking-[0.12em] uppercase text-muted max-w-[120px]">{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex gap-3.5 flex-wrap mt-11 animate-fade-up-4">
                 <BtnGold href="#investimento">Ver modalidades</BtnGold>
                 <BtnOutline href="#modulos">O que inclui</BtnOutline>
               </div>
-            </div>
-
-            {/* HERO CARD */}
-            <div className="bg-surface border border-border rounded-lg overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.4)] animate-fade-up-3">
-              <div className="px-8 pt-7 pb-5 border-b border-border">
-                <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-2">Mentoria IH7</div>
-                <div className="font-display text-[22px] font-semibold text-white">Jenifer Calvi</div>
-              </div>
-              <div className="flex flex-col">
-                {[
-                  ["3", "Meses de duração"],
-                  ["2×", "Encontros por mês"],
-                  ["5", "Dimensões no diagnóstico de fluência"],
-                  ["24h", "Retorno via WhatsApp direto"],
-                ].map(([num, label], i) => (
-                  <div key={i} className="px-8 py-5 border-b border-gold/[0.08] last:border-b-0 flex items-center justify-between transition-colors hover:bg-gold-glow">
-                    <div className="font-display text-[32px] font-bold text-gold leading-none">{num}</div>
-                    <div className="font-mono-label text-[10px] tracking-[0.12em] uppercase text-muted text-right max-w-[140px]">{label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>

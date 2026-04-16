@@ -331,6 +331,11 @@ const Index = () => {
           <SectionLabel>03 — Investimento</SectionLabel>
           <SectionTitle>Escolha Sua <em className="italic text-gold">Modalidade</em></SectionTitle>
           <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
+          <div className="mb-6 px-5 py-3 border border-gold/30 bg-gold/5 rounded-lg">
+            <p className="text-[12px] text-gold font-mono-label tracking-wide text-center">
+              ⚡ Preços promocionais de validação de modelo — sujeitos a alteração a qualquer momento
+            </p>
+          </div>
 
           {/* Coletiva */}
           <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold pt-5 pb-3 flex items-center gap-3">

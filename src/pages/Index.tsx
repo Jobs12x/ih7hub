@@ -280,7 +280,7 @@ const Index = () => {
       <section className="py-24 relative z-[1]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>01 — Público</SectionLabel>
-          <SectionTitle>Para <em className="italic text-gold">Quem</em> É</SectionTitle>
+          <SectionTitle>Para <em className="italic text-gold">quem</em> é</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { tag: "Empreendedoras", title: "Tração & Expansão", desc: "Empreendedoras que querem tracionar e expandir seu negócio com o poder da Inteligência Artificial aplicada à estratégia." },
@@ -304,7 +304,7 @@ const Index = () => {
       <section id="modulos" className="py-24 relative z-[1]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>02 — Conteúdo</SectionLabel>
-          <SectionTitle>Nossos <em className="italic text-gold">Entregáveis</em></SectionTitle>
+          <SectionTitle><em className="italic text-gold">Entregáveis</em></SectionTitle>
           <ModuleAccordion modules={contentModules} />
         </div>
       </section>
@@ -333,7 +333,7 @@ const Index = () => {
           <p className="text-[13px] text-muted mb-3">Duração: 3 meses · 2 encontros por mês · parcelado ou à vista</p>
           <div className="mb-6 px-5 py-3 border border-gold/30 bg-gold/5 rounded-lg">
             <p className="text-[12px] text-gold font-mono-label tracking-wide text-center">
-              ⚡ Preços promocionais de validação de modelo — sujeitos a alteração a qualquer momento
+              ⚡ Preços promocionais de validação de modelo de negócios — sujeitos a alteração a qualquer momento
             </p>
           </div>
 

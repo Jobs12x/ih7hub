@@ -14,6 +14,7 @@ Deno.serve(async (req) => {
     if (!GITHUB_PAT) throw new Error('GITHUB_PAT is not configured')
 
     const GITHUB_REPO = Deno.env.get('GITHUB_REPO')
+    console.log('GITHUB_REPO:', GITHUB_REPO)
     if (!GITHUB_REPO) throw new Error('GITHUB_REPO is not configured')
 
     const { score, level, classification, answers } = await req.json()

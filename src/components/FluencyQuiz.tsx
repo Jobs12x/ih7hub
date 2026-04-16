@@ -2,56 +2,180 @@ import { useState } from "react";
 
 const quizQuestions = [
   {
-    question: "Como você normalmente começa a usar a IA?",
+    question: "Quando você usa IA, normalmente você:",
     options: [
-      "Abro e escrevo o que preciso diretamente",
-      "Penso no que quero antes, formulo minha hipótese",
-      "Defino critérios de avaliação e o que farei com o output",
+      "Faz perguntas diretas e espera a resposta",
+      "Ajusta a pergunta até obter algo melhor",
+      "Usa a IA para explorar possibilidades e gerar novas perguntas",
     ],
   },
   {
-    question: "O que você faz com a primeira resposta da IA?",
+    question: "Ao receber uma resposta da IA, você:",
     options: [
-      "Uso como está, é geralmente suficiente",
-      "Reviso e ajusto, peço refinamentos",
-      "Questiono, comparo com minha visão, busco o que falta",
+      "Aceita e usa",
+      "Ajusta ou pede refinamento",
+      "Questiona, valida e contrapõe",
     ],
   },
   {
-    question: "Quando você usa a IA, quem conduz o pensamento?",
+    question: "Seus prompts costumam ser:",
     options: [
-      "A IA sugere, eu aceito ou recuso",
-      "Eu direciono, a IA executa e amplia",
-      "Eu lidero o pensamento, a IA desafia minhas premissas",
+      "Genéricos",
+      "Estruturados com contexto",
+      "Estratégicos, com objetivo claro e direcionamento",
+    ],
+  },
+  {
+    question: "Você usa IA principalmente para:",
+    options: [
+      "Responder dúvidas rápidas",
+      "Apoiar tarefas do dia a dia",
+      "Resolver problemas mais complexos ou tomar decisões",
+    ],
+  },
+  {
+    question: "Quando a IA erra ou traz algo superficial:",
+    options: [
+      "Ignora ou aceita",
+      "Pede para melhorar",
+      "Identifica o erro e redefine o caminho",
+    ],
+  },
+  {
+    question: "No seu trabalho, a IA:",
+    options: [
+      "É usada pontualmente",
+      "Faz parte de algumas atividades",
+      "Está integrada ao fluxo de trabalho",
+    ],
+  },
+  {
+    question: "Você sente que:",
+    options: [
+      "A IA faz por você",
+      "Você e a IA colaboram",
+      "Você conduz e a IA potencializa",
+    ],
+  },
+  {
+    question: "Quando começa uma tarefa com IA:",
+    options: [
+      "Vai direto pedir algo",
+      "Dá algum contexto",
+      "Define objetivo, critérios e direciona",
+    ],
+  },
+  {
+    question: "Você já usou IA para:",
+    options: [
+      "Buscar informações",
+      "Organizar ou melhorar algo",
+      "Criar algo novo ou inovar",
+    ],
+  },
+  {
+    question: "Seu nível de confiança na IA é:",
+    options: [
+      "Alto, usa sem questionar",
+      "Moderado, valida às vezes",
+      "Crítico, sempre valida",
+    ],
+  },
+  {
+    question: "Você usa IA para:",
+    options: [
+      "Executar tarefas",
+      "Pensar melhor",
+      "Expandir sua forma de pensar",
+    ],
+  },
+  {
+    question: "Em decisões importantes:",
+    options: [
+      "Usa pouco ou superficialmente",
+      "Considera como uma das fontes",
+      "Usa para análise, mas decide com autonomia",
     ],
   },
 ];
 
-const results = [
-  {
-    level: "Nível 1 — Iniciante",
-    desc: "Você usa a IA de forma reativa. O próximo passo é desenvolver o hábito de trazer suas hipóteses antes de abrir qualquer ferramenta. A mentoria começa exatamente aqui.",
-  },
-  {
-    level: "Nível 2 — Intermediário",
-    desc: "Você já direciona a IA com intenção, mas ainda tem espaço para aprofundar o pensamento crítico sobre os outputs. Na mentoria, você vai afinar sua curadoria e ganhar consistência estratégica.",
-  },
-  {
-    level: "Nível 3 — Avançado",
-    desc: "Você opera com fluência real em inteligência híbrida. A mentoria vai ajudá-la a sistematizar esse processo, expandir sua stack e tornar isso replicável em equipes e projetos.",
-  },
-];
+const TOTAL_QUESTIONS = quizQuestions.length;
+
+interface DiagnosticResult {
+  score: number;
+  level: string;
+  classification: string;
+  behavior: string;
+  risk: string;
+  leverage: string;
+  actions: string[];
+}
+
+function getDiagnostic(score: number): DiagnosticResult {
+  if (score <= 18) {
+    return {
+      score,
+      level: "Nível 1",
+      classification: "Gerar Respostas",
+      behavior:
+        "Você usa a IA de forma reativa — faz perguntas, recebe respostas e segue adiante. O pensamento crítico ainda não está ativado na interação com a máquina. A IA decide o caminho, não você.",
+      risk:
+        "Dependência silenciosa. Quanto mais você aceita sem questionar, mais a IA molda suas decisões sem que você perceba. Você perde autonomia intelectual.",
+      leverage:
+        "Ativar o pensamento antes de abrir qualquer ferramenta. Trazer hipóteses, não apenas perguntas. Isso muda tudo.",
+      actions: [
+        "Antes de usar IA, escreva em uma linha o que você espera como resultado",
+        "Ao receber uma resposta, pergunte: 'O que está faltando aqui?'",
+        "Troque prompts genéricos por prompts com contexto e objetivo claro",
+      ],
+    };
+  }
+  if (score <= 27) {
+    return {
+      score,
+      level: "Nível 2",
+      classification: "Refinar Raciocínio",
+      behavior:
+        "Você já direciona a IA com intenção e refina os outputs. Há pensamento crítico, mas ele ainda é inconsistente — funciona em algumas tarefas, mas não em todas. Falta sistema.",
+      risk:
+        "Platô de competência. Você sabe usar bem, mas não evolui. O risco é achar que já domina IA quando ainda opera abaixo do potencial estratégico.",
+      leverage:
+        "Sistematizar. Criar frameworks pessoais de uso, com critérios de avaliação e fluxos repetíveis. Sair do improviso inteligente para a fluência estruturada.",
+      actions: [
+        "Crie um template de prompt para suas 3 tarefas mais frequentes",
+        "Após cada uso de IA, avalie: 'Eu conduzi ou fui conduzido?'",
+        "Experimente usar IA para questionar suas próprias premissas, não só para executar",
+      ],
+    };
+  }
+  return {
+    score,
+    level: "Nível 3",
+    classification: "Novas Perguntas",
+    behavior:
+      "Você opera com fluência real. A IA é uma extensão do seu pensamento — você conduz, questiona, valida e usa para expandir possibilidades. O protagonismo é seu.",
+    risk:
+      "Isolamento estratégico. Você evoluiu, mas se não sistematizar e compartilhar, seu conhecimento fica preso em você. Escala exige método replicável.",
+    leverage:
+      "Transformar sua fluência em sistema. Documentar, ensinar, replicar em equipes e projetos. Tornar a Inteligência Híbrida um ativo organizacional.",
+    actions: [
+      "Documente seus melhores fluxos de IA em um playbook pessoal",
+      "Mentore alguém — ensinar consolida e revela gaps",
+      "Explore IA para desafiar suas premissas em decisões estratégicas",
+    ],
+  };
+}
 
 const FluencyQuiz = () => {
   const [currentQ, setCurrentQ] = useState(0);
   const [scores, setScores] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
 
-  const handleAnswer = (score: number) => {
-    const newScores = [...scores, score + 1];
+  const handleAnswer = (optionIndex: number) => {
+    const newScores = [...scores, optionIndex + 1]; // A=1, B=2, C=3
     setScores(newScores);
 
-    if (currentQ < 2) {
+    if (currentQ < TOTAL_QUESTIONS - 1) {
       setCurrentQ(currentQ + 1);
     } else {
       setShowResult(true);
@@ -65,15 +189,15 @@ const FluencyQuiz = () => {
   };
 
   const total = scores.reduce((a, b) => a + b, 0);
-  const resultIdx = total <= 4 ? 0 : total <= 7 ? 1 : 2;
-  const progress = showResult ? 100 : (currentQ / 3) * 100;
+  const diagnostic = getDiagnostic(total);
+  const progress = showResult ? 100 : (currentQ / TOTAL_QUESTIONS) * 100;
 
   return (
     <div className="max-w-[680px] mx-auto">
       {!showResult ? (
         <div key={currentQ} className="animate-fade-up">
           <div className="font-mono-label text-[11px] text-muted tracking-[0.1em] mb-3">
-            Pergunta {currentQ + 1} de 3
+            Pergunta {currentQ + 1} de {TOTAL_QUESTIONS}
           </div>
           <div className="font-display text-[22px] text-white mb-7 leading-snug">
             {quizQuestions[currentQ].question}
@@ -85,36 +209,95 @@ const FluencyQuiz = () => {
                 onClick={() => handleAnswer(i)}
                 className="w-full px-6 py-[18px] bg-surface border border-border-v rounded-[10px] text-foreground text-sm text-left cursor-pointer transition-all leading-relaxed hover:bg-surface2 hover:border-gold hover:text-white hover:translate-x-1"
               >
+                <span className="font-mono-label text-gold mr-3 text-xs">
+                  {["A", "B", "C"][i]}
+                </span>
                 {opt}
               </button>
             ))}
           </div>
         </div>
       ) : (
-        <div className="text-center animate-fade-up">
-          <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-4">
-            Seu perfil de fluência
+        <div className="animate-fade-up">
+          {/* Score header */}
+          <div className="text-center mb-10">
+            <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-4">
+              Seu diagnóstico de fluência em IA
+            </div>
+            <div className="font-display text-4xl font-bold text-white mb-1">
+              {diagnostic.level}
+            </div>
+            <div className="font-mono-label text-sm text-gold tracking-wide">
+              {diagnostic.classification}
+            </div>
+            <div className="font-mono-label text-xs text-muted mt-2">
+              Pontuação: {diagnostic.score} de 36
+            </div>
           </div>
-          <div className="font-display text-4xl font-bold text-white mb-2">
-            {results[resultIdx].level}
+
+          {/* Diagnostic sections */}
+          <div className="space-y-6 text-left mb-10">
+            <div className="p-5 bg-surface border border-border-v rounded-lg">
+              <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-gold mb-2">
+                Leitura do comportamento
+              </div>
+              <p className="text-sm text-foreground leading-relaxed">
+                {diagnostic.behavior}
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface border border-border-v rounded-lg">
+              <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-[hsl(0_60%_60%)] mb-2">
+                ⚠ Risco oculto
+              </div>
+              <p className="text-sm text-foreground leading-relaxed">
+                {diagnostic.risk}
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface border border-border-v rounded-lg">
+              <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-gold mb-2">
+                Alavanca de evolução
+              </div>
+              <p className="text-sm text-foreground leading-relaxed">
+                {diagnostic.leverage}
+              </p>
+            </div>
+
+            <div className="p-5 bg-surface border border-border-v rounded-lg">
+              <div className="font-mono-label text-[10px] tracking-[0.15em] uppercase text-gold mb-3">
+                Próximos passos práticos
+              </div>
+              <ul className="space-y-2">
+                {diagnostic.actions.map((action, i) => (
+                  <li key={i} className="text-sm text-foreground leading-relaxed flex gap-2">
+                    <span className="text-gold font-mono-label text-xs mt-0.5">{i + 1}.</span>
+                    {action}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="text-sm text-foreground leading-relaxed max-w-[480px] mx-auto mb-9">
-            {results[resultIdx].desc}
+
+          {/* CTAs */}
+          <div className="text-center">
+            <a
+              href={`https://wa.me/5544991388809?text=${encodeURIComponent(
+                `Olá Jenifer! Fiz o diagnóstico de fluência em IA e meu resultado foi: ${diagnostic.level} — ${diagnostic.classification} (${diagnostic.score}/36 pontos).\n\nGostaria de saber mais sobre a mentoria IH7!`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-[26px] py-[13px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-gold text-bg-deep font-bold rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(38_48%_46%/0.3)]"
+            >
+              Aprofundar na mentoria
+            </a>
+            <button
+              onClick={reset}
+              className="block mx-auto mt-4 bg-transparent border-none text-muted text-xs cursor-pointer font-mono-label tracking-[0.1em] uppercase hover:text-gold transition-colors"
+            >
+              Refazer diagnóstico →
+            </button>
           </div>
-          <a
-            href={`https://wa.me/5544991388809?text=${encodeURIComponent(`Olá Jenifer! Fiz o diagnóstico de fluência em IA e meu resultado foi: ${results[resultIdx].level}. ${results[resultIdx].desc}\n\nGostaria de saber mais sobre a mentoria IH7!`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-[26px] py-[13px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-gold text-bg-deep font-bold rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(38_48%_46%/0.3)]"
-          >
-            Aprofundar na mentoria
-          </a>
-          <button
-            onClick={reset}
-            className="block mx-auto mt-4 bg-transparent border-none text-muted text-xs cursor-pointer font-mono-label tracking-[0.1em] uppercase hover:text-gold transition-colors"
-          >
-            Refazer →
-          </button>
         </div>
       )}
 

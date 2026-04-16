@@ -172,6 +172,24 @@ const FluencyQuiz = () => {
   const [scores, setScores] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
 
+  const total = scores.reduce((a, b) => a + b, 0);
+  const diagnostic = getDiagnostic(total);
+
+  useEffect(() => {
+    if (showResult && scores.length === TOTAL_QUESTIONS) {
+      supabase.functions.invoke('create-github-issue', {
+        body: {
+          score: total,
+          level: diagnostic.level,
+          classification: diagnostic.classification,
+          answers: scores,
+        },
+      }).then(({ error }) => {
+        if (error) console.error('Erro ao salvar diagnóstico:', error);
+      });
+    }
+  }, [showResult]);
+
   const handleAnswer = (optionIndex: number) => {
     const newScores = [...scores, optionIndex + 1]; // A=1, B=2, C=3
     setScores(newScores);

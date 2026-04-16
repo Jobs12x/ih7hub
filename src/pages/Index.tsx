@@ -194,7 +194,7 @@ const Index = () => {
           <div>
               <div className="font-mono-label text-[11px] tracking-[0.2em] uppercase text-gold mb-7 flex items-center gap-2.5 animate-fade-up-1">
                 <span className="w-7 h-px bg-gold" />
-                Proposta de Mentoria · 2026
+                Mentoria IH7
               </div>
               <h1 className="font-display text-[clamp(44px,5.5vw,68px)] font-bold text-white leading-[1.1] mb-3 animate-fade-up-2">
                 Inteligência Híbrida <em className="italic text-gold">Aplicada:</em> Fluência em IA
@@ -265,11 +265,31 @@ const Index = () => {
         <div className="max-w-[1040px] mx-auto px-5 md:px-9">
           <SectionLabel>00 — Missão</SectionLabel>
           <SectionTitle>Sobre a <em className="italic text-gold">Mentoria</em></SectionTitle>
-          <div className="bg-surface border border-border border-l-[3px] border-l-gold rounded-lg px-11 py-10 relative">
+          <div className="bg-surface border border-border border-l-[3px] border-l-gold rounded-lg px-11 py-10 relative mb-10">
             <span className="absolute top-2 left-9 font-display text-[100px] leading-none text-gold/10">"</span>
             <p className="font-display italic text-[19px] text-white leading-relaxed">
-              Preparar pessoas e organizações para adotarem e escalarem Inteligência Artificial por meio de uma abordagem híbrida — combinando capacidade humana com inteligência artificial de forma estratégica e sustentável.
+              A mentoria IH7 nasceu do propósito entre educação, tecnologia e negócios. Com foco em mulheres que querem fluência em IA para potencializar seus resultados no trabalho, negócios ou carreira.
             </p>
+          </div>
+
+          {/* GRANDES NÚMEROS */}
+          <div className="flex flex-col gap-3">
+            {[
+              { number: "56%", text: "de salário a mais para quem tem habilidades em IA", source: "PwC AI Jobs Barometer 2025" },
+              { number: "4x", text: "mais crescimento de produtividade em setores expostos à IA", source: "PwC 2025" },
+              { number: "39%", text: "da força de trabalho será impactada nos próximos 2 a 5 anos", source: "Gartner 2026" },
+              { number: "170M", text: "novos empregos criados até 2030 — saldo positivo de 78 milhões", source: "WEF / OIT 2025" },
+            ].map((stat, i) => (
+              <div key={i} className="bg-surface border border-border-v rounded-lg px-8 py-6 flex items-center gap-6 border-l-[3px] border-l-gold/60">
+                <div className="font-display text-[clamp(32px,4vw,44px)] font-bold text-gold leading-none shrink-0 min-w-[90px]">
+                  {stat.number}
+                </div>
+                <div>
+                  <p className="text-sm text-foreground leading-relaxed">{stat.text}</p>
+                  <p className="font-mono-label text-[10px] tracking-[0.1em] text-muted mt-1">{stat.source}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

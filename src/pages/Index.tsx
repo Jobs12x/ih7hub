@@ -318,7 +318,7 @@ const Index = () => {
           <h2 className="font-display text-[clamp(34px,4vw,52px)] font-bold text-white leading-tight mb-5 text-center">
             Em que nível você <em className="italic text-gold">está hoje?</em>
           </h2>
-          <p className="text-sm text-muted text-center mb-14 max-w-[460px] mx-auto">Três perguntas rápidas para identificar seu estágio de fluência em inteligência híbrida.</p>
+          <p className="text-sm text-muted text-center mb-14 max-w-[460px] mx-auto">Perguntas rápidas para identificar seu estágio de conhecimento e IA</p>
           <FluencyQuiz />
         </div>
       </section>

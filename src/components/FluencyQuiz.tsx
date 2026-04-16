@@ -124,9 +124,9 @@ function getDiagnostic(score: number): DiagnosticResult {
       leverage:
         "Ativar o pensamento antes de abrir qualquer ferramenta. Trazer hipóteses, não apenas perguntas. Isso muda tudo.",
       actions: [
-        "Antes de usar IA, escreva em uma linha o que você espera como resultado",
-        "Ao receber uma resposta, pergunte: 'O que está faltando aqui?'",
-        "Troque prompts genéricos por prompts com contexto e objetivo claro",
+        "Na mentoria, você vai ativar sua alavanca de evolução com acompanhamento de perto",
+        "Desenvolverá o hábito de pensar antes de perguntar — com método e prática guiada",
+        "Construirá uma base sólida para operar com autonomia e pensamento crítico real",
       ],
     };
   }

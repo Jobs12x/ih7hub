@@ -10,7 +10,6 @@ Deno.serve(async (req) => {
 
   try {
     const GITHUB_PAT = Deno.env.get('GITHUB_PAT')
-    console.log('GITHUB_PAT length:', GITHUB_PAT?.length, 'starts with:', GITHUB_PAT?.substring(0, 4))
     if (!GITHUB_PAT) throw new Error('GITHUB_PAT is not configured')
 
     const GITHUB_REPO = 'Jobs12x/Forma-o-IA'

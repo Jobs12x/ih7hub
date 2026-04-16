@@ -273,7 +273,7 @@ const Index = () => {
           </div>
 
           {/* GRANDES NÚMEROS */}
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
               { number: "56%", text: "de salário a mais para quem tem habilidades em IA", source: "PwC AI Jobs Barometer 2025" },
               { number: "4x", text: "mais crescimento de produtividade em setores expostos à IA", source: "PwC 2025" },

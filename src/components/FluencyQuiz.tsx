@@ -124,9 +124,9 @@ function getDiagnostic(score: number): DiagnosticResult {
       leverage:
         "Ativar o pensamento antes de abrir qualquer ferramenta. Trazer hipóteses, não apenas perguntas. Isso muda tudo.",
       actions: [
-        "Antes de usar IA, escreva em uma linha o que você espera como resultado",
-        "Ao receber uma resposta, pergunte: 'O que está faltando aqui?'",
-        "Troque prompts genéricos por prompts com contexto e objetivo claro",
+        "Na mentoria, você vai ativar sua alavanca de evolução com acompanhamento de perto",
+        "Desenvolverá o hábito de pensar antes de perguntar — com método e prática guiada",
+        "Construirá uma base sólida para operar com autonomia e pensamento crítico real",
       ],
     };
   }
@@ -142,9 +142,9 @@ function getDiagnostic(score: number): DiagnosticResult {
       leverage:
         "Sistematizar. Criar frameworks pessoais de uso, com critérios de avaliação e fluxos repetíveis. Sair do improviso inteligente para a fluência estruturada.",
       actions: [
-        "Crie um template de prompt para suas 3 tarefas mais frequentes",
-        "Após cada uso de IA, avalie: 'Eu conduzi ou fui conduzido?'",
-        "Experimente usar IA para questionar suas próprias premissas, não só para executar",
+        "Na mentoria, você vai sistematizar sua fluência com frameworks e fluxos guiados",
+        "Terá acompanhamento para sair do improviso e construir consistência estratégica",
+        "Vai acelerar sua evolução com feedbacks direcionados e prática estruturada",
       ],
     };
   }
@@ -159,9 +159,9 @@ function getDiagnostic(score: number): DiagnosticResult {
     leverage:
       "Transformar sua fluência em sistema. Documentar, ensinar, replicar em equipes e projetos. Tornar a Inteligência Híbrida um ativo organizacional.",
     actions: [
-      "Documente seus melhores fluxos de IA em um playbook pessoal",
-      "Mentore alguém — ensinar consolida e revela gaps",
-      "Explore IA para desafiar suas premissas em decisões estratégicas",
+      "Na mentoria, você vai transformar sua fluência em sistema replicável e escalável",
+      "Terá suporte para documentar, estruturar e multiplicar seu conhecimento em equipes",
+      "Vai consolidar seu protagonismo com método e visão estratégica de Inteligência Híbrida",
     ],
   };
 }

@@ -207,8 +207,6 @@ const FluencyQuiz = () => {
     setShowResult(false);
   };
 
-  const total = scores.reduce((a, b) => a + b, 0);
-  const diagnostic = getDiagnostic(total);
   const progress = showResult ? 100 : (currentQ / TOTAL_QUESTIONS) * 100;
 
   return (

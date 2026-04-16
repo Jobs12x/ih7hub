@@ -142,9 +142,9 @@ function getDiagnostic(score: number): DiagnosticResult {
       leverage:
         "Sistematizar. Criar frameworks pessoais de uso, com critérios de avaliação e fluxos repetíveis. Sair do improviso inteligente para a fluência estruturada.",
       actions: [
-        "Crie um template de prompt para suas 3 tarefas mais frequentes",
-        "Após cada uso de IA, avalie: 'Eu conduzi ou fui conduzido?'",
-        "Experimente usar IA para questionar suas próprias premissas, não só para executar",
+        "Na mentoria, você vai sistematizar sua fluência com frameworks e fluxos guiados",
+        "Terá acompanhamento para sair do improviso e construir consistência estratégica",
+        "Vai acelerar sua evolução com feedbacks direcionados e prática estruturada",
       ],
     };
   }

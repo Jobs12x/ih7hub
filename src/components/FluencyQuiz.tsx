@@ -159,9 +159,9 @@ function getDiagnostic(score: number): DiagnosticResult {
     leverage:
       "Transformar sua fluência em sistema. Documentar, ensinar, replicar em equipes e projetos. Tornar a Inteligência Híbrida um ativo organizacional.",
     actions: [
-      "Documente seus melhores fluxos de IA em um playbook pessoal",
-      "Mentore alguém — ensinar consolida e revela gaps",
-      "Explore IA para desafiar suas premissas em decisões estratégicas",
+      "Na mentoria, você vai transformar sua fluência em sistema replicável e escalável",
+      "Terá suporte para documentar, estruturar e multiplicar seu conhecimento em equipes",
+      "Vai consolidar seu protagonismo com método e visão estratégica de Inteligência Híbrida",
     ],
   };
 }

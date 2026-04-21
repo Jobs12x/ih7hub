@@ -246,7 +246,7 @@ const FluencyQuiz = () => {
 
   return (
     <div className="max-w-[680px] mx-auto">
-      {!showResult ? (
+      {!showResult && !showContactForm ? (
         <div key={currentQ} className="animate-fade-up">
           <div className="font-mono-label text-[11px] text-muted tracking-[0.1em] mb-3">
             Pergunta {currentQ + 1} de {TOTAL_QUESTIONS}
@@ -269,6 +269,62 @@ const FluencyQuiz = () => {
             ))}
           </div>
         </div>
+      ) : showContactForm ? (
+        <form onSubmit={handleSubmitContact} className="animate-fade-up">
+          <div className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-gold mb-4 text-center">
+            Quase lá
+          </div>
+          <div className="font-display text-[22px] text-white mb-3 leading-snug text-center">
+            Para liberar seu diagnóstico
+          </div>
+          <p className="text-sm text-muted text-center mb-7 leading-relaxed">
+            Preencha seus dados para receber o resultado completo e, se quiser, conversar sobre os próximos passos.
+          </p>
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              placeholder="Seu nome completo"
+              value={contact.name}
+              onChange={(e) => setContact({ ...contact, name: e.target.value })}
+              maxLength={100}
+              required
+              className="w-full px-5 py-[14px] bg-surface border border-border-v rounded-[10px] text-foreground text-sm placeholder:text-muted focus:outline-none focus:border-gold transition-colors"
+            />
+            <input
+              type="tel"
+              placeholder="WhatsApp com DDD (ex: 44991234567)"
+              value={contact.whatsapp}
+              onChange={(e) => setContact({ ...contact, whatsapp: e.target.value })}
+              maxLength={20}
+              required
+              className="w-full px-5 py-[14px] bg-surface border border-border-v rounded-[10px] text-foreground text-sm placeholder:text-muted focus:outline-none focus:border-gold transition-colors"
+            />
+            <input
+              type="email"
+              placeholder="Seu melhor e-mail"
+              value={contact.email}
+              onChange={(e) => setContact({ ...contact, email: e.target.value })}
+              maxLength={255}
+              required
+              className="w-full px-5 py-[14px] bg-surface border border-border-v rounded-[10px] text-foreground text-sm placeholder:text-muted focus:outline-none focus:border-gold transition-colors"
+            />
+          </div>
+          {formError && (
+            <div className="mt-4 text-xs text-[hsl(0_60%_60%)] text-center font-mono-label">
+              {formError}
+            </div>
+          )}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="mt-6 w-full inline-flex items-center justify-center gap-2 px-[26px] py-[14px] font-mono-label text-[11px] tracking-[0.12em] uppercase bg-gold text-bg-deep font-bold rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(38_48%_46%/0.3)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+          >
+            {submitting ? "Enviando..." : "Ver meu diagnóstico"}
+          </button>
+          <p className="mt-4 text-[11px] text-muted text-center leading-relaxed">
+            Seus dados são tratados com confidencialidade e usados apenas para enviar seu diagnóstico.
+          </p>
+        </form>
       ) : (
         <div className="animate-fade-up">
           {/* Score header */}

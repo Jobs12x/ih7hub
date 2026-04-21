@@ -14,10 +14,34 @@ Deno.serve(async (req) => {
 
     const GITHUB_REPO = 'Jobs12x/Forma-o-IA'
 
-    const { score, level, classification, answers } = await req.json()
+    const { score, level, classification, answers, contact } = await req.json()
 
     if (typeof score !== 'number' || !level || !classification || !Array.isArray(answers)) {
       return new Response(JSON.stringify({ error: 'Invalid input' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    // Validate contact
+    const name = typeof contact?.name === 'string' ? contact.name.trim() : ''
+    const whatsapp = typeof contact?.whatsapp === 'string' ? contact.whatsapp.trim() : ''
+    const email = typeof contact?.email === 'string' ? contact.email.trim() : ''
+
+    if (!name || name.length < 2 || name.length > 100) {
+      return new Response(JSON.stringify({ error: 'Invalid name' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 255) {
+      return new Response(JSON.stringify({ error: 'Invalid email' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+    if (whatsapp.replace(/\D/g, '').length < 10 || whatsapp.length > 20) {
+      return new Response(JSON.stringify({ error: 'Invalid whatsapp' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -35,6 +59,11 @@ Deno.serve(async (req) => {
 **Nível:** ${level}
 **Classificação:** ${classification}
 
+### Contato
+- **Nome:** ${name}
+- **WhatsApp:** ${whatsapp}
+- **E-mail:** ${email}
+
 ### Respostas detalhadas
 ${answersFormatted}
 `
@@ -48,7 +77,7 @@ ${answersFormatted}
         'User-Agent': 'IH7-Diagnostico',
       },
       body: JSON.stringify({
-        title: `[Diagnóstico] ${level} — ${classification} (${score}/36) — ${now.split('T')[0]}`,
+        title: `[Diagnóstico] ${name} — ${level} (${score}/36) — ${now.split('T')[0]}`,
         body,
         labels: ['diagnóstico', level.toLowerCase().replace(' ', '-')],
       }),

@@ -170,25 +170,14 @@ function getDiagnostic(score: number): DiagnosticResult {
 const FluencyQuiz = () => {
   const [currentQ, setCurrentQ] = useState(0);
   const [scores, setScores] = useState<number[]>([]);
+  const [showContactForm, setShowContactForm] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [contact, setContact] = useState({ name: "", whatsapp: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const total = scores.reduce((a, b) => a + b, 0);
   const diagnostic = getDiagnostic(total);
-
-  useEffect(() => {
-    if (showResult && scores.length === TOTAL_QUESTIONS) {
-      supabase.functions.invoke('create-github-issue', {
-        body: {
-          score: total,
-          level: diagnostic.level,
-          classification: diagnostic.classification,
-          answers: scores,
-        },
-      }).then(({ error }) => {
-        if (error) console.error('Erro ao salvar diagnóstico:', error);
-      });
-    }
-  }, [showResult]);
 
   const handleAnswer = (optionIndex: number) => {
     const newScores = [...scores, optionIndex + 1]; // A=1, B=2, C=3
@@ -197,17 +186,63 @@ const FluencyQuiz = () => {
     if (currentQ < TOTAL_QUESTIONS - 1) {
       setCurrentQ(currentQ + 1);
     } else {
-      setShowResult(true);
+      setShowContactForm(true);
     }
+  };
+
+  const handleSubmitContact = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError("");
+
+    const name = contact.name.trim();
+    const whatsapp = contact.whatsapp.trim();
+    const email = contact.email.trim();
+
+    if (!name || name.length < 2) {
+      setFormError("Por favor, informe seu nome.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setFormError("Por favor, informe um e-mail válido.");
+      return;
+    }
+    if (whatsapp.replace(/\D/g, "").length < 10) {
+      setFormError("Por favor, informe um WhatsApp válido com DDD.");
+      return;
+    }
+
+    setSubmitting(true);
+    const { error } = await supabase.functions.invoke('create-github-issue', {
+      body: {
+        score: total,
+        level: diagnostic.level,
+        classification: diagnostic.classification,
+        answers: scores,
+        contact: { name, whatsapp, email },
+      },
+    });
+    setSubmitting(false);
+
+    if (error) {
+      console.error('Erro ao salvar diagnóstico:', error);
+      setFormError("Não foi possível enviar agora. Tente novamente.");
+      return;
+    }
+
+    setShowContactForm(false);
+    setShowResult(true);
   };
 
   const reset = () => {
     setCurrentQ(0);
     setScores([]);
+    setShowContactForm(false);
     setShowResult(false);
+    setContact({ name: "", whatsapp: "", email: "" });
+    setFormError("");
   };
 
-  const progress = showResult ? 100 : (currentQ / TOTAL_QUESTIONS) * 100;
+  const progress = showResult ? 100 : showContactForm ? 100 : (currentQ / TOTAL_QUESTIONS) * 100;
 
   return (
     <div className="max-w-[680px] mx-auto">

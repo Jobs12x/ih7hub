@@ -1221,11 +1221,11 @@ function collect() {
 }
 
 // —— STORAGE UPLOAD
-async function uploadFilesToStorage(files, folder) {
+async function uploadFilesToStorage(files, folder, prefix) {
   const urls = [];
   for (const file of files) {
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}-${safeName}`;
+    const path = `${folder}/${prefix}/${Date.now()}-${safeName}`;
     const res = await fetch(`${SUPABASE_URL}/storage/v1/object/diagnosticos-arquivos/${path}`, {
       method: 'POST',
       headers: {
@@ -1257,9 +1257,13 @@ async function submitForm() {
       btn.textContent = 'Enviando...';
     }
 
+    const empresa  = val('empresa_nome').replace(/[^a-zA-Z0-9À-ú ._-]/g, '').trim().replace(/ +/g, '_').slice(0, 40);
+    const pessoa   = val('resp_nome').replace(/[^a-zA-Z0-9À-ú ._-]/g, '').trim().replace(/ +/g, '_').slice(0, 30);
+    const prefix   = `${empresa}-${pessoa}`;
+
     const [urlsProcessos, urlsGerais] = await Promise.all([
-      uploadFilesToStorage(filesProcessos, 'processos'),
-      uploadFilesToStorage(filesGerais,    'geral'),
+      uploadFilesToStorage(filesProcessos, 'processos', prefix),
+      uploadFilesToStorage(filesGerais,    'geral',     prefix),
     ]);
 
     btn.textContent = 'Salvando...';

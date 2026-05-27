@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IH7 — Diagnóstico Estratégico</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg-deep:    #1a1033;
+    --bg-base:    #231847;
+    --violet:     #7b5ea7;
+    --lavender:   #a391cb;
+    --gold:       #b8924e;
+    --plum:       #7b4f7a;
+    --rose:       #a25b70;
+    --text:       #ececec;
+    --muted:      #c4c7d6;
+    --border:     rgba(163,145,203,0.18);
+    --card:       rgba(123,94,167,0.10);
+    --card-hover: rgba(123,94,167,0.18);
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans:  'DM Sans', system-ui, sans-serif;
+    --radius:     12px;
+    --transition: 0.22s ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-deep);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(123,94,167,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(123,79,122,0.15) 0%, transparent 55%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--violet));
+    width: 0%;
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  header {
+    position: relative; z-index: 1;
+    padding: 48px 0 0;
+    text-align: center;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .logo-orbit { width: 44px; height: 44px; }
+  .logo-orbit svg { width: 100%; height: 100%; }
+
+  .logo-wordmark {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    max-width: 680px;
+    margin: 0 auto 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--lavender); }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .divider {
+    width: 48px; height: 2px;
+    background: var(--gold);
+    margin: 0 auto 48px;
+    border-radius: 2px;
+  }
+
+  /* STEPPER */
+  .stepper {
+    position: relative; z-index: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 840px;
+    margin: 0 auto 56px;
+    padding: 0 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stepper::-webkit-scrollbar { display: none; }
+
+  .step-item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; flex: 1; min-width: 100px;
+    cursor: pointer; position: relative;
+  }
+  .step-item::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: calc(50% + 16px);
+    right: calc(-50% + 16px);
+    height: 1px;
+    background: var(--border);
+  }
+  .step-item:last-child::after { display: none; }
+
+  .step-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg-base);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    transition: var(--transition);
+    position: relative; z-index: 1;
+  }
+  .step-item.active .step-dot {
+    background: var(--violet); border-color: var(--violet); color: white;
+    box-shadow: 0 0 0 4px rgba(123,94,167,0.25);
+  }
+  .step-item.done .step-dot {
+    background: var(--gold); border-color: var(--gold); color: var(--bg-deep);
+  }
+
+  .step-label {
+    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); text-align: center;
+    transition: var(--transition); white-space: nowrap;
+  }
+  .step-item.active .step-label { color: var(--lavender); }
+  .step-item.done .step-label   { color: var(--gold); }
+
+  /* MAIN */
+  main {
+    position: relative; z-index: 1;
+    max-width: 800px; margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .form-section { display: none; animation: fadeUp 0.4s ease both; }
+  .form-section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header { margin-bottom: 40px; }
+
+  .section-number {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; display: block; margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700; color: var(--text);
+    margin-bottom: 10px; line-height: 1.2;
+  }
+
+  .section-desc {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.65; font-weight: 300; max-width: 560px;
+  }
+
+  .field-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+  }
+  .field-group:hover {
+    background: var(--card-hover);
+    border-color: rgba(163,145,203,0.3);
+  }
+
+  .group-title {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--muted); margin-bottom: 8px; letter-spacing: 0.01em;
+  }
+  label .req { color: var(--gold); margin-left: 3px; }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    background: rgba(26,16,51,0.7);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text);
+    transition: var(--transition);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--violet);
+    box-shadow: 0 0 0 3px rgba(123,94,167,0.18);
+    background: rgba(26,16,51,0.9);
+  }
+  input::placeholder, textarea::placeholder { color: rgba(196,199,214,0.35); }
+  textarea { resize: vertical; min-height: 88px; line-height: 1.6; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a391cb' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  select option { background: #231847; color: var(--text); }
+
+  /* OPTIONS GRID — checkboxes clicáveis */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 13px;
+    color: var(--muted);
+    background: transparent;
+    font-family: var(--font-sans);
+    text-align: left;
+    user-select: none;
+  }
+  .opt-btn:hover { border-color: var(--lavender); color: var(--text); }
+  .opt-btn.selected {
+    border-color: var(--violet);
+    background: rgba(123,94,167,0.15);
+    color: var(--text);
+  }
+
+  .opt-check {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition);
+    position: relative;
+  }
+  .opt-btn.selected .opt-check {
+    background: var(--violet);
+    border-color: var(--violet);
+  }
+  .opt-btn.selected .opt-check::after {
+    content: '';
+    position: absolute;
+    width: 8px; height: 5px;
+    border-left: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  /* RANGE */
+  .range-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%; height: 4px;
+    border-radius: 2px; background: var(--border);
+    outline: none; padding: 0; border: none; box-shadow: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--gold); cursor: pointer; border: none;
+    box-shadow: 0 0 0 3px rgba(184,146,78,0.2);
+  }
+  .range-value {
+    text-align: center; font-size: 20px;
+    font-family: var(--font-serif); color: var(--gold);
+  }
+
+  /* FILE UPLOAD */
+  .upload-area {
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+  }
+  .upload-area:hover { border-color: var(--lavender); background: rgba(123,94,167,0.06); }
+  .upload-area input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-area .upload-icon { font-size: 22px; margin-bottom: 6px; }
+  .upload-area p { font-size: 13px; color: var(--muted); }
+  .upload-area span { font-size: 11px; color: rgba(196,199,214,0.5); display: block; margin-top: 4px; }
+  .upload-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .upload-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(123,94,167,0.12); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px;
+    font-size: 12px; color: var(--muted);
+  }
+  .upload-item button {
+    background: none; border: none; color: var(--rose);
+    cursor: pointer; font-size: 14px; padding: 0 4px;
+  }
+
+  /* NAV */
+  .nav-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px; gap: 16px;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: 8px;
+    font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition); border: none; letter-spacing: 0.02em;
+  }
+  .btn-ghost {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+  }
+  .btn-ghost:hover { border-color: var(--lavender); color: var(--text); }
+  .btn-primary {
+    background: var(--violet); color: white;
+    box-shadow: 0 4px 20px rgba(123,94,167,0.35);
+  }
+  .btn-primary:hover {
+    background: #8f6cc0; box-shadow: 0 6px 28px rgba(123,94,167,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-gold {
+    background: var(--gold); color: var(--bg-deep);
+    box-shadow: 0 4px 20px rgba(184,146,78,0.35);
+  }
+  .btn-gold:hover {
+    background: #cba060; box-shadow: 0 6px 28px rgba(184,146,78,0.5);
+    transform: translateY(-1px);
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* SUCCESS */
+  #success-screen {
+    display: none; text-align: center; padding: 80px 24px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(184,146,78,0.15); border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 32px;
+  }
+  .success-icon svg { width: 32px; height: 32px; color: var(--gold); }
+  #success-screen h2 { font-family: var(--font-serif); font-size: 32px; color: var(--text); margin-bottom: 16px; }
+  #success-screen p { color: var(--muted); font-size: 15px; line-height: 1.7; max-width: 440px; margin: 0 auto 12px; font-weight: 300; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 32px; right: 32px;
+    padding: 14px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 500; z-index: 200;
+    opacity: 0; transform: translateY(8px); transition: all 0.3s ease; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: rgba(162,91,112,0.9); color: white; border: 1px solid var(--rose); }
+  .toast.ok    { background: rgba(123,94,167,0.9); color: white; border: 1px solid var(--violet); }
+
+  footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 32px 24px 48px;
+    font-size: 12px; color: rgba(196,199,214,0.35); letter-spacing: 0.06em;
+  }
+  footer strong { color: var(--gold); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr 1fr; }
+    .step-label { display: none; }
+    .field-group { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header>
+  <div class="logo-mark">
+    <div class="logo-orbit">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="17" stroke="#b8924e" stroke-width="1.2"/>
+        <circle cx="22" cy="22" r="1.8" fill="#b8924e"/>
+        <circle cx="16" cy="7.5" r="1.8" fill="#b8924e"/>
+      </svg>
+    </div>
+    <div class="logo-wordmark">IH7</div>
+  </div>
+  <p class="header-eyebrow">Inteligência Híbrida Aplicada</p>
+  <h1>Diagnóstico Estratégico <em>Empresarial</em></h1>
+  <p class="header-sub">
+    Este formulário mapeia sua operação atual, seus objetivos e os gaps entre o estado presente e o futuro desejado.
+    As informações alimentam diretamente a construção do seu plano de transformação com IA.
+  </p>
+  <div class="divider"></div>
+</header>
+
+<div class="stepper" id="stepper">
+  <div class="step-item active" data-step="0" onclick="goTo(0)">
+    <div class="step-dot">1</div>
+    <span class="step-label">Identificação</span>
+  </div>
+  <div class="step-item" data-step="1" onclick="goTo(1)">
+    <div class="step-dot">2</div>
+    <span class="step-label">Visão</span>
+  </div>
+  <div class="step-item" data-step="2" onclick="goTo(2)">
+    <div class="step-dot">3</div>
+    <span class="step-label">As Is</span>
+  </div>
+  <div class="step-item" data-step="3" onclick="goTo(3)">
+    <div class="step-dot">4</div>
+    <span class="step-label">To Be</span>
+  </div>
+  <div class="step-item" data-step="4" onclick="goTo(4)">
+    <div class="step-dot">5</div>
+    <span class="step-label">Gaps</span>
+  </div>
+  <div class="step-item" data-step="5" onclick="goTo(5)">
+    <div class="step-dot">6</div>
+    <span class="step-label">Priorização</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- —— SEÇÃO 0 — IDENTIFICAÇÃO —— -->
+  <div class="form-section active" id="section-0">
+    <div class="section-header">
+      <span class="section-number">Seção 01 / 06</span>
+      <h2 class="section-title">Identificação da Empresa</h2>
+      <p class="section-desc">Dados básicos para contextualizar o diagnóstico e personalizar as análises.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Dados Corporativos</p>
+      <div class="field">
+        <label>Razão social ou nome fantasia <span class="req">*</span></label>
+        <input type="text" id="empresa_nome" placeholder="Ex.: Acme Tecnologia Ltda." />
+      </div>
+      <div class="field">
+        <label>Setor / segmento de atuação <span class="req">*</span></label>
+        <input type="text" id="empresa_setor" placeholder="Ex.: Varejo, Saúde, Educação, Indústria..." />
+      </div>
+      <div class="field">
+        <label>Porte da empresa</label>
+        <select id="empresa_porte">
+          <option value="">Selecione</option>
+          <option>Microempresa (até 9 colaboradores)</option>
+          <option>Pequena (10–49 colaboradores)</option>
+          <option>Média (50–249 colaboradores)</option>
+          <option>Grande (250+ colaboradores)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Modelo de negócio principal</label>
+        <div class="options-grid" id="modelo_negocio">
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','B2B')"><span class="opt-check"></span>B2B</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','B2C')"><span class="opt-check"></span>B2C</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','B2B2C')"><span class="opt-check"></span>B2B2C</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','SaaS')"><span class="opt-check"></span>SaaS</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','Marketplace')"><span class="opt-check"></span>Marketplace</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'modelo_negocio','Serviços')"><span class="opt-check"></span>Serviços</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Responsável pelo Diagnóstico</p>
+      <div class="field">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" id="resp_nome" placeholder="Quem está preenchendo este formulário" />
+      </div>
+      <div class="field">
+        <label>Cargo / função</label>
+        <input type="text" id="resp_cargo" placeholder="Ex.: CEO, Diretor de Operações, Gestor..." />
+      </div>
+      <div class="field">
+        <label>E-mail <span class="req">*</span></label>
+        <input type="email" id="resp_email" placeholder="contato@empresa.com.br" />
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <span></span>
+      <button class="btn btn-primary" onclick="next()">
+        Próximo <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- —— SEÇÃO 1 — VISÃO ESTRATÉGICA —— -->
+  <div class="form-section" id="section-1">
+    <div class="section-header">
+      <span class="section-number">Seção 02 / 06</span>
+      <h2 class="section-title">Visão Estratégica</h2>
+      <p class="section-desc">Onde a empresa quer chegar e o que está no caminho. Seja direto, sem formalidades.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Posicionamento</p>
+      <div class="field">
+        <label>Missão e visão da empresa</label>
+        <textarea id="missao_visao" placeholder="O que a empresa faz e para onde quer ir. Pode ser informal."></textarea>
+      </div>
+      <div class="field">
+        <label>Principais diferenciais competitivos</label>
+        <textarea id="diferenciais" placeholder="O que faz a empresa ser escolhida em vez da concorrência?"></textarea>
+      </div>
+      <div class="field">
+        <label>Mercado-alvo e concorrência</label>
+        <textarea id="mercado_concorrencia" placeholder="Quem são os clientes ideais? Quem são os principais concorrentes?"></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Objetivos e Prioridades</p>
+      <div class="field">
+        <label>Objetivos estratégicos para os próximos 12–24 meses</label>
+        <textarea id="objetivos_estrategicos" placeholder="Crescimento, expansão, eficiência, novos produtos..."></textarea>
+      </div>
+      <div class="field">
+        <label>Principais dores do negócio hoje</label>
+        <textarea id="dores_negocio" placeholder="O que mais tira o sono da liderança? Quais problemas se repetem?"></textarea>
+      </div>
+      <div class="field">
+        <label>O que está impedindo o crescimento desejado?</label>
+        <textarea id="impedimentos" placeholder="Gargalos, recursos, competências, processos, mercado..."></textarea>
+      </div>
+      <div class="field">
+        <label>Oportunidades que a empresa enxerga e ainda não explorou</label>
+        <textarea id="oportunidades" placeholder="Tendências, nichos, tecnologias, movimentos de mercado..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Áreas Prioritárias</p>
+      <div class="field">
+        <label>Quais áreas são mais críticas para o negócio hoje?</label>
+        <div class="options-grid" id="areas_criticas">
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Vendas')"><span class="opt-check"></span>Vendas</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Marketing')"><span class="opt-check"></span>Marketing</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Operações')"><span class="opt-check"></span>Operações</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Financeiro')"><span class="opt-check"></span>Financeiro</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','RH')"><span class="opt-check"></span>RH / Pessoas</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','TI')"><span class="opt-check"></span>TI / Tecnologia</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Atendimento')"><span class="opt-check"></span>Atendimento</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Produto')"><span class="opt-check"></span>Produto</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Acadêmico')"><span class="opt-check"></span>Acadêmico</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'areas_criticas','Regulatório')"><span class="opt-check"></span>Regulatório</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="prev()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Anterior
+      </button>
+      <button class="btn btn-primary" onclick="next()">
+        Próximo <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- —— SEÇÃO 2 — AS IS —— -->
+  <div class="form-section" id="section-2">
+    <div class="section-header">
+      <span class="section-number">Seção 03 / 06</span>
+      <h2 class="section-title">Estado Atual — As Is</h2>
+      <p class="section-desc">A realidade operacional hoje. Processos, pessoas, tecnologia e dados.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Processos</p>
+      <div class="field">
+        <label>Descreva os principais fluxos operacionais da empresa</label>
+        <textarea id="fluxos_operacionais" placeholder="Como funciona o ciclo principal do negócio? Do lead ao cliente, do pedido à entrega..."></textarea>
+      </div>
+      <div class="field">
+        <label>Maiores gargalos e pontos de retrabalho identificados</label>
+        <textarea id="gargalos" placeholder="Onde as coisas travam? O que se refaz com frequência?"></textarea>
+      </div>
+      <div class="field">
+        <label>Há processos formalizados / documentados?</label>
+        <select id="processos_formalizados">
+          <option value="">Selecione</option>
+          <option>Sim, a maioria está documentada</option>
+          <option>Parcialmente — algumas áreas têm, outras não</option>
+          <option>Muito pouco ou nada documentado</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Anexe fluxogramas, mapas de processo ou documentações relevantes</label>
+        <div class="upload-area" id="upload-processos">
+          <input type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.pptx,.drawio,.vsdx" onchange="handleUpload(event,'upload-processos','files_processos')" />
+          <div class="upload-icon">📎</div>
+          <p>Arraste arquivos ou clique para selecionar</p>
+          <span>PDF, imagens, Word, Excel, Visio, Draw.io</span>
+        </div>
+        <div class="upload-list" id="files_processos"></div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Pessoas e Cultura</p>
+      <div class="field">
+        <label>Como você avalia a maturidade digital do time?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixa</span><span>Alta</span></div>
+          <input type="range" min="1" max="5" value="3" id="maturidade_digital" oninput="document.getElementById('maturidade_val').textContent=this.value"/>
+          <div class="range-value" id="maturidade_val">3</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Como você avalia a maturidade do time em IA?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Nenhuma</span><span>Avançada</span></div>
+          <input type="range" min="1" max="5" value="2" id="maturidade_ia" oninput="document.getElementById('maturidade_ia_val').textContent=this.value"/>
+          <div class="range-value" id="maturidade_ia_val">2</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Como é a cultura em relação a mudanças e inovação?</label>
+        <select id="cultura_mudanca">
+          <option value="">Selecione</option>
+          <option>Aberta — o time abraça novas iniciativas</option>
+          <option>Moderada — há abertura mas com reservas</option>
+          <option>Resistente — mudanças geram atrito significativo</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Há profissionais dedicados a dados, tecnologia ou inovação?</label>
+        <select id="profissionais_tech">
+          <option value="">Selecione</option>
+          <option>Sim, equipe dedicada</option>
+          <option>Sim, mas são generalistas</option>
+          <option>Não — terceirizamos</option>
+          <option>Não — não temos hoje</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Tecnologia e Sistemas</p>
+      <div class="field">
+        <label>Quais sistemas utiliza hoje? (ERP, CRM, AVA, sistemas acadêmicos, etc.)</label>
+        <textarea id="sistemas" placeholder="Ex.: TOTVS (financeiro/RH), Moodle (AVA), Jackard (acadêmico presencial), Habbla (comercial)... informe nome, área e uso principal"></textarea>
+      </div>
+      <div class="field">
+        <label>Nível atual de automação de processos</label>
+        <select id="nivel_automacao">
+          <option value="">Selecione</option>
+          <option>Nenhuma automação relevante</option>
+          <option>Automações pontuais em algumas áreas</option>
+          <option>Boa cobertura — maioria dos processos repetitivos automatizados</option>
+          <option>Alta maturidade em automação</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>A empresa usa IA em algum processo hoje?</label>
+        <div class="options-grid" id="uso_ia_atual">
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','Nenhum')"><span class="opt-check"></span>Nenhum</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','ChatGPT/Claude')"><span class="opt-check"></span>ChatGPT / Claude</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','Gemini/Google')"><span class="opt-check"></span>Gemini / Google AI</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','Copilot')"><span class="opt-check"></span>Copilot / IA Microsoft</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','BI/Analytics')"><span class="opt-check"></span>BI com IA</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','Automacoes')"><span class="opt-check"></span>Automações com IA</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','Agentes')"><span class="opt-check"></span>Agentes de IA</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'uso_ia_atual','IA Embarcada')"><span class="opt-check"></span>IA embarcada em sistema</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Descreva como a IA está sendo usada hoje (ferramentas, áreas, casos de uso)</label>
+        <textarea id="ia_uso_descricao" placeholder="Ex.: Gemini para validação de documentos na Diretoria de Registro; ChatGPT para rascunhos de comunicação..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Dados e Governança</p>
+      <div class="field">
+        <label>Como as decisões são tomadas hoje na empresa?</label>
+        <select id="decisao_base">
+          <option value="">Selecione</option>
+          <option>Baseadas em dados e indicadores estruturados</option>
+          <option>Misto — dados e intuição</option>
+          <option>Majoritariamente intuição e experiência</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Quais indicadores a empresa monitora hoje?</label>
+        <textarea id="indicadores_atuais" placeholder="KPIs, métricas de vendas, operacionais, financeiros... liste o que existe hoje"></textarea>
+      </div>
+      <div class="field">
+        <label>Qual a qualidade percebida dos dados que a empresa possui?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Inconsistentes</span><span>Confiáveis</span></div>
+          <input type="range" min="1" max="5" value="3" id="qualidade_dados" oninput="document.getElementById('dados_val').textContent=this.value"/>
+          <div class="range-value" id="dados_val">3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="prev()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Anterior
+      </button>
+      <button class="btn btn-primary" onclick="next()">
+        Próximo <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- —— SEÇÃO 3 — TO BE —— -->
+  <div class="form-section" id="section-3">
+    <div class="section-header">
+      <span class="section-number">Seção 04 / 06</span>
+      <h2 class="section-title">Estado Futuro — To Be</h2>
+      <p class="section-desc">O cenário ideal da operação. Onde a empresa quer chegar em termos de processos e tecnologia.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Visão Operacional Futura</p>
+      <div class="field">
+        <label>Como os processos deveriam funcionar no estado ideal?</label>
+        <textarea id="processos_futuros" placeholder="Fluxos mais simples, mais automatizados, mais integrados... como seria?"></textarea>
+      </div>
+      <div class="field">
+        <label>O que deveria ser automatizado que hoje é manual?</label>
+        <textarea id="o_que_automatizar" placeholder="Liste processos, tarefas ou etapas que consomem tempo e poderiam ser automatizados"></textarea>
+      </div>
+      <div class="field">
+        <label>O que deveria ser eliminado ou simplificado radicalmente?</label>
+        <textarea id="o_que_eliminar" placeholder="Reuniões, relatórios, aprovações, etapas burocráticas que não geram valor..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Tecnologia e IA</p>
+      <div class="field">
+        <label>Qual o nível desejado de automação e uso de IA?</label>
+        <select id="nivel_ia_desejado">
+          <option value="">Selecione</option>
+          <option>Automações pontuais para ganhar eficiência</option>
+          <option>IA integrada nos principais processos</option>
+          <option>IA como vantagem competitiva estrutural</option>
+          <option>Empresa orientada a dados com IA em toda a cadeia</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Como IA pode apoiar a operação? (selecione as mais relevantes)</label>
+        <div class="options-grid" id="ia_aplicacoes">
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Atendimento')"><span class="opt-check"></span>Atendimento ao aluno/cliente</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Vendas')"><span class="opt-check"></span>Suporte a vendas / captação</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Analise')"><span class="opt-check"></span>Análise de dados</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Conteudo')"><span class="opt-check"></span>Geração de conteúdo</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Processos')"><span class="opt-check"></span>Automação de processos</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Decisao')"><span class="opt-check"></span>Apoio à decisão</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Validacao')"><span class="opt-check"></span>Validação de documentos</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Regulatorio')"><span class="opt-check"></span>Processos regulatórios</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','RH')"><span class="opt-check"></span>Gestão de pessoas</button>
+          <button type="button" class="opt-btn" onclick="toggleOpt(this,'ia_aplicacoes','Financeiro')"><span class="opt-check"></span>Financeiro / Controladoria</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Quais sistemas já utiliza e quais deseja implementar ou substituir?</label>
+        <textarea id="tecnologias_desejadas" placeholder="Ex.: já usa TOTVS, Moodle, Jackard — deseja integrar os sistemas, implementar BI, plataforma de automação, agentes de IA para atendimento..."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="prev()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Anterior
+      </button>
+      <button class="btn btn-primary" onclick="next()">
+        Próximo <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- —— SEÇÃO 4 — GAP ANALYSIS —— -->
+  <div class="form-section" id="section-4">
+    <div class="section-header">
+      <span class="section-number">Seção 05 / 06</span>
+      <h2 class="section-title">Análise de Gaps</h2>
+      <p class="section-desc">Identifique onde estão as maiores distâncias entre o estado atual e o desejado.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Avaliação por Dimensão</p>
+      <div class="field">
+        <label>Gap de Processo — quão grave é hoje?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixo</span><span>Crítico</span></div>
+          <input type="range" min="1" max="5" value="3" id="gap_processo" oninput="document.getElementById('gp_val').textContent=this.value"/>
+          <div class="range-value" id="gp_val">3</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Gap Tecnológico — quão grave é hoje?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixo</span><span>Crítico</span></div>
+          <input type="range" min="1" max="5" value="3" id="gap_tecnologico" oninput="document.getElementById('gt_val').textContent=this.value"/>
+          <div class="range-value" id="gt_val">3</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Gap de Pessoas — quão grave é hoje?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixo</span><span>Crítico</span></div>
+          <input type="range" min="1" max="5" value="3" id="gap_pessoas" oninput="document.getElementById('gpe_val').textContent=this.value"/>
+          <div class="range-value" id="gpe_val">3</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Gap Estratégico — quão grave é hoje?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixo</span><span>Crítico</span></div>
+          <input type="range" min="1" max="5" value="3" id="gap_estrategico" oninput="document.getElementById('ge_val').textContent=this.value"/>
+          <div class="range-value" id="ge_val">3</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Gap de Dados / Integração — quão grave é hoje?</label>
+        <div class="range-wrap">
+          <div class="range-labels"><span>Baixo</span><span>Crítico</span></div>
+          <input type="range" min="1" max="5" value="3" id="gap_dados" oninput="document.getElementById('gd_val').textContent=this.value"/>
+          <div class="range-value" id="gd_val">3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Detalhamento dos Principais Gaps</p>
+      <div class="field">
+        <label>Descreva o principal gap de processo que precisa ser resolvido</label>
+        <textarea id="gap_processo_desc" placeholder="Qual processo mais trava a operação hoje?"></textarea>
+      </div>
+      <div class="field">
+        <label>Descreva o principal gap tecnológico</label>
+        <textarea id="gap_tech_desc" placeholder="Ex.: sistemas não integrados (chaves primárias incompatíveis entre Moodle e Jackard), ausência de BI centralizado..."></textarea>
+      </div>
+      <div class="field">
+        <label>Descreva o principal gap de pessoas / cultura</label>
+        <textarea id="gap_pessoas_desc" placeholder="Competências ausentes, resistência, sobrecarga operacional..."></textarea>
+      </div>
+      <div class="field">
+        <label>Algum outro gap relevante não coberto acima?</label>
+        <textarea id="gap_outros" placeholder="Financeiro, governança, regulatório, integração entre polos..."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="prev()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Anterior
+      </button>
+      <button class="btn btn-primary" onclick="next()">
+        Próximo <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- —— SEÇÃO 5 — PRIORIZAÇÃO —— -->
+  <div class="form-section" id="section-5">
+    <div class="section-header">
+      <span class="section-number">Seção 06 / 06</span>
+      <h2 class="section-title">Priorização e Contexto Final</h2>
+      <p class="section-desc">O que deve ser atacado primeiro e o que mais importa para o sucesso da transformação.</p>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Critérios de Prioridade</p>
+      <div class="field">
+        <label>Qual o principal critério de priorização da empresa?</label>
+        <select id="criterio_prioridade">
+          <option value="">Selecione</option>
+          <option>Impacto financeiro (redução de custo / aumento de receita)</option>
+          <option>Velocidade de implementação (quick wins)</option>
+          <option>Risco operacional (o que pode travar o negócio)</option>
+          <option>Experiência do aluno / cliente</option>
+          <option>Escalabilidade (o que trava o crescimento)</option>
+          <option>Conformidade regulatória</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Qual iniciativa, se implementada, traria o maior impacto no negócio?</label>
+        <textarea id="maior_impacto" placeholder="Se você pudesse resolver apenas uma coisa nos próximos 90 dias, o que seria?"></textarea>
+      </div>
+      <div class="field">
+        <label>Existe algum projeto ou iniciativa já em andamento que devemos considerar?</label>
+        <textarea id="projetos_andamento" placeholder="Ex.: migração para TOTVS em andamento, implementação de novo AVA, reestruturação de polos..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Expectativas e Horizonte</p>
+      <div class="field">
+        <label>Prazo esperado para ver resultados concretos</label>
+        <select id="prazo_resultados">
+          <option value="">Selecione</option>
+          <option>30–60 dias (quick wins urgentes)</option>
+          <option>3–6 meses (resultados consistentes)</option>
+          <option>6–12 meses (transformação estrutural)</option>
+          <option>12–24 meses (mudança cultural e sistêmica)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Qual o orçamento estimado disponível para esta transformação?</label>
+        <select id="orcamento">
+          <option value="">Prefiro não informar</option>
+          <option>Até R$ 10.000</option>
+          <option>R$ 10.000 – R$ 50.000</option>
+          <option>R$ 50.000 – R$ 150.000</option>
+          <option>R$ 150.000 – R$ 500.000</option>
+          <option>Acima de R$ 500.000</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>O que seria uma consultoria bem-sucedida para a sua empresa?</label>
+        <textarea id="sucesso_definido" placeholder="O que precisa acontecer para você dizer que valeu o investimento?"></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <p class="group-title">Observações Finais</p>
+      <div class="field">
+        <label>Contexto adicional ou qualquer detalhe relevante não coberto acima</label>
+        <textarea id="observacoes_finais" placeholder="Informações sobre estrutura organizacional, particularidades dos polos, contexto regulatório, restrições importantes..."></textarea>
+      </div>
+      <div class="field">
+        <label>Anexe organogramas, relatórios ou qualquer material de apoio</label>
+        <div class="upload-area" id="upload-geral">
+          <input type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.pptx" onchange="handleUpload(event,'upload-geral','files_geral')" />
+          <div class="upload-icon">📎</div>
+          <p>Arraste arquivos ou clique para selecionar</p>
+          <span>PDF, imagens, Word, Excel, PowerPoint</span>
+        </div>
+        <div class="upload-list" id="files_geral"></div>
+      </div>
+      <div class="field">
+        <label>Como conheceu o IH7?</label>
+        <select id="origem">
+          <option value="">Selecione</option>
+          <option>Indicação</option>
+          <option>LinkedIn</option>
+          <option>Instagram</option>
+          <option>Evento / palestra</option>
+          <option>Busca no Google</option>
+          <option>Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="prev()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Anterior
+      </button>
+      <button class="btn btn-gold" onclick="submitForm()" id="submit-btn">
+        Enviar Diagnóstico
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l5 5 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success-screen">
+    <div class="success-icon">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="16" cy="16" r="13"/>
+        <path d="M10 16l4 4 8-8"/>
+      </svg>
+    </div>
+    <h2>Diagnóstico enviado</h2>
+    <p>Recebemos suas informações com sucesso. Jenifer Calvi entrará em contato em breve para agendar a devolutiva estratégica.</p>
+    <p style="color:var(--gold);font-size:13px;margin-top:8px;">(44) 99138-8809</p>
+  </div>
+
+</main>
+
+<footer>
+  <strong>IH7</strong> — Inteligência Híbrida Aplicada &nbsp;·&nbsp; Jenifer Calvi, MSc
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL      = 'https://SEU_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_ANON_KEY';
+
+let current = 0;
+const total  = 6;
+const multiSelects = {};
+const uploadedFiles = {};
+
+// —— UTILS
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? (el.value || '').trim() : '';
+}
+function getMulti(groupId) {
+  return multiSelects[groupId] ? [...multiSelects[groupId]] : [];
+}
+function toast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.className = 'toast', 3500);
+}
+function updateProgress() {
+  document.getElementById('progress-bar').style.width = (current / (total - 1) * 100) + '%';
+}
+function updateStepper() {
+  document.querySelectorAll('.step-item').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i === current) el.classList.add('active');
+    else if (i < current) el.classList.add('done');
+  });
+}
+function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+// —— MULTI SELECT (buttons, not labels)
+function toggleOpt(btn, groupId, value) {
+  if (!multiSelects[groupId]) multiSelects[groupId] = new Set();
+  const set = multiSelects[groupId];
+  if (set.has(value)) { set.delete(value); btn.classList.remove('selected'); }
+  else                { set.add(value);    btn.classList.add('selected');    }
+}
+
+// —— FILE UPLOAD
+function handleUpload(event, areaId, listId) {
+  const files = Array.from(event.target.files);
+  if (!uploadedFiles[listId]) uploadedFiles[listId] = [];
+  files.forEach(f => uploadedFiles[listId].push(f));
+  renderFileList(listId);
+}
+function removeFile(listId, index) {
+  uploadedFiles[listId].splice(index, 1);
+  renderFileList(listId);
+}
+function renderFileList(listId) {
+  const container = document.getElementById(listId);
+  const files = uploadedFiles[listId] || [];
+  container.innerHTML = files.map((f, i) => `
+    <div class="upload-item">
+      <span>📄 ${f.name} <span style="opacity:.5">(${(f.size/1024).toFixed(0)} KB)</span></span>
+      <button onclick="removeFile('${listId}',${i})" title="Remover">✕</button>
+    </div>
+  `).join('');
+}
+
+// —— NAVIGATION
+function goTo(index) {
+  if (index > current) { nextStep(index); return; }
+  document.getElementById(`section-${current}`).classList.remove('active');
+  current = index;
+  document.getElementById(`section-${current}`).classList.add('active');
+  updateStepper(); updateProgress(); scrollTop();
+}
+function next() { nextStep(); }
+function nextStep(target) {
+  if (!validate(current)) return;
+  document.getElementById(`section-${current}`).classList.remove('active');
+  current = (target !== undefined) ? target : current + 1;
+  document.getElementById(`section-${current}`).classList.add('active');
+  updateStepper(); updateProgress(); scrollTop();
+}
+function prev() {
+  if (current === 0) return;
+  document.getElementById(`section-${current}`).classList.remove('active');
+  current--;
+  document.getElementById(`section-${current}`).classList.add('active');
+  updateStepper(); updateProgress(); scrollTop();
+}
+
+// —— VALIDATION
+function validate(step) {
+  if (step === 0) {
+    if (!val('empresa_nome'))  { toast('Informe o nome da empresa.', 'error'); return false; }
+    if (!val('empresa_setor')) { toast('Informe o setor de atuação.', 'error'); return false; }
+    if (!val('resp_nome'))     { toast('Informe o nome do responsável.', 'error'); return false; }
+    if (!val('resp_email'))    { toast('Informe o e-mail de contato.', 'error'); return false; }
+  }
+  return true;
+}
+
+// —— COLLECT
+function collect() {
+  return {
+    empresa_nome: val('empresa_nome'),
+    empresa_setor: val('empresa_setor'),
+    empresa_porte: val('empresa_porte'),
+    modelo_negocio: getMulti('modelo_negocio'),
+    resp_nome: val('resp_nome'),
+    resp_cargo: val('resp_cargo'),
+    resp_email: val('resp_email'),
+    missao_visao: val('missao_visao'),
+    diferenciais: val('diferenciais'),
+    mercado_concorrencia: val('mercado_concorrencia'),
+    objetivos_estrategicos: val('objetivos_estrategicos'),
+    dores_negocio: val('dores_negocio'),
+    impedimentos: val('impedimentos'),
+    oportunidades: val('oportunidades'),
+    areas_criticas: getMulti('areas_criticas'),
+    fluxos_operacionais: val('fluxos_operacionais'),
+    gargalos: val('gargalos'),
+    processos_formalizados: val('processos_formalizados'),
+    maturidade_digital: parseInt(val('maturidade_digital') || 3),
+    maturidade_ia: parseInt(val('maturidade_ia') || 2),
+    cultura_mudanca: val('cultura_mudanca'),
+    profissionais_tech: val('profissionais_tech'),
+    sistemas: val('sistemas'),
+    nivel_automacao: val('nivel_automacao'),
+    uso_ia_atual: getMulti('uso_ia_atual'),
+    ia_uso_descricao: val('ia_uso_descricao'),
+    decisao_base: val('decisao_base'),
+    indicadores_atuais: val('indicadores_atuais'),
+    qualidade_dados: parseInt(val('qualidade_dados') || 3),
+    processos_futuros: val('processos_futuros'),
+    o_que_automatizar: val('o_que_automatizar'),
+    o_que_eliminar: val('o_que_eliminar'),
+    nivel_ia_desejado: val('nivel_ia_desejado'),
+    ia_aplicacoes: getMulti('ia_aplicacoes'),
+    tecnologias_desejadas: val('tecnologias_desejadas'),
+    gap_processo_score: parseInt(val('gap_processo') || 3),
+    gap_tecnologico_score: parseInt(val('gap_tecnologico') || 3),
+    gap_pessoas_score: parseInt(val('gap_pessoas') || 3),
+    gap_estrategico_score: parseInt(val('gap_estrategico') || 3),
+    gap_dados_score: parseInt(val('gap_dados') || 3),
+    gap_processo_desc: val('gap_processo_desc'),
+    gap_tech_desc: val('gap_tech_desc'),
+    gap_pessoas_desc: val('gap_pessoas_desc'),
+    gap_outros: val('gap_outros'),
+    criterio_prioridade: val('criterio_prioridade'),
+    maior_impacto: val('maior_impacto'),
+    projetos_andamento: val('projetos_andamento'),
+    prazo_resultados: val('prazo_resultados'),
+    orcamento: val('orcamento'),
+    sucesso_definido: val('sucesso_definido'),
+    observacoes_finais: val('observacoes_finais'),
+    origem: val('origem'),
+    submitted_at: new Date().toISOString(),
+  };
+}
+
+// —— SUBMIT
+async function submitForm() {
+  if (!validate(current)) return;
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  const payload = collect();
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/diagnosticos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    document.getElementById(`section-${current}`).classList.remove('active');
+    document.getElementById('stepper').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    document.getElementById('progress-bar').style.width = '100%';
+    scrollTop();
+  } catch (err) {
+    console.error(err);
+    toast('Erro ao enviar. Verifique a configuração do Supabase.', 'error');
+    btn.disabled = false;
+    btn.textContent = 'Enviar Diagnóstico';
+  }
+}
+
+updateStepper();
+updateProgress();
+</script>
+
+<!--
+————————————————————————————————————————————————
+  SCHEMA SQL — Supabase (cole no SQL Editor)
+————————————————————————————————————————————————
+
+CREATE TABLE diagnosticos (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  submitted_at TIMESTAMPTZ DEFAULT NOW(),
+  empresa_nome TEXT NOT NULL,
+  empresa_setor TEXT,
+  empresa_porte TEXT,
+  modelo_negocio TEXT[],
+  resp_nome TEXT NOT NULL,
+  resp_cargo TEXT,
+  resp_email TEXT NOT NULL,
+  missao_visao TEXT,
+  diferenciais TEXT,
+  mercado_concorrencia TEXT,
+  objetivos_estrategicos TEXT,
+  dores_negocio TEXT,
+  impedimentos TEXT,
+  oportunidades TEXT,
+  areas_criticas TEXT[],
+  fluxos_operacionais TEXT,
+  gargalos TEXT,
+  processos_formalizados TEXT,
+  maturidade_digital SMALLINT CHECK (maturidade_digital BETWEEN 1 AND 5),
+  maturidade_ia SMALLINT CHECK (maturidade_ia BETWEEN 1 AND 5),
+  cultura_mudanca TEXT,
+  profissionais_tech TEXT,
+  sistemas TEXT,
+  nivel_automacao TEXT,
+  uso_ia_atual TEXT[],
+  ia_uso_descricao TEXT,
+  decisao_base TEXT,
+  indicadores_atuais TEXT,
+  qualidade_dados SMALLINT CHECK (qualidade_dados BETWEEN 1 AND 5),
+  processos_futuros TEXT,
+  o_que_automatizar TEXT,
+  o_que_eliminar TEXT,
+  nivel_ia_desejado TEXT,
+  ia_aplicacoes TEXT[],
+  tecnologias_desejadas TEXT,
+  gap_processo_score SMALLINT CHECK (gap_processo_score BETWEEN 1 AND 5),
+  gap_tecnologico_score SMALLINT CHECK (gap_tecnologico_score BETWEEN 1 AND 5),
+  gap_pessoas_score SMALLINT CHECK (gap_pessoas_score BETWEEN 1 AND 5),
+  gap_estrategico_score SMALLINT CHECK (gap_estrategico_score BETWEEN 1 AND 5),
+  gap_dados_score SMALLINT CHECK (gap_dados_score BETWEEN 1 AND 5),
+  gap_processo_desc TEXT,
+  gap_tech_desc TEXT,
+  gap_pessoas_desc TEXT,
+  gap_outros TEXT,
+  criterio_prioridade TEXT,
+  maior_impacto TEXT,
+  projetos_andamento TEXT,
+  prazo_resultados TEXT,
+  orcamento TEXT,
+  sucesso_definido TEXT,
+  observacoes_finais TEXT,
+  origem TEXT
+);
+
+ALTER TABLE diagnosticos ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "insert_diagnostico" ON diagnosticos FOR INSERT WITH CHECK (true);
+
+-->
+</body>
+</html>

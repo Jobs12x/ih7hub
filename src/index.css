@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 254 50% 12%;
+    --bg-deep: 256 55% 10%;
+    --foreground: 255 30% 85%;
+    --surface: 258 45% 17%;
+    --surface2: 258 42% 21%;
+
+    --card: 258 45% 17%;
+    --card-foreground: 255 30% 85%;
+
+    --popover: 258 45% 17%;
+    --popover-foreground: 255 30% 85%;
+
+    --primary: 38 48% 46%;
+    --primary-foreground: 256 55% 10%;
+
+    --secondary: 258 45% 17%;
+    --secondary-foreground: 255 30% 85%;
+
+    --muted: 258 25% 48%;
+    --muted-foreground: 258 25% 48%;
+
+    --accent: 268 28% 52%;
+    --accent-foreground: 260 60% 95%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 38 48% 46% / 0.15;
+    --border-v: 268 28% 52% / 0.25;
+    --input: 38 48% 46% / 0.15;
+    --ring: 38 48% 46%;
+
+    --radius: 0.75rem;
+
+    --white: 260 60% 95%;
+    --gold: 38 48% 46%;
+    --gold-dim: 38 48% 46% / 0.18;
+    --gold-glow: 38 48% 46% / 0.08;
+    --violet: 268 28% 52%;
+    --violet-dim: 268 28% 52% / 0.2;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1100px;
+    height: 1100px;
+    background: radial-gradient(ellipse, hsl(0 0% 100% / 0.06) 0%, hsl(268 28% 72% / 0.10) 30%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-mono-label {
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(38 48% 46% / 0.5); }
+  50% { box-shadow: 0 0 0 8px hsl(38 48% 46% / 0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s both;
+}
+
+.animate-fade-up-1 { animation: fadeUp 0.6s 0.1s both; }
+.animate-fade-up-2 { animation: fadeUp 0.6s 0.2s both; }
+.animate-fade-up-3 { animation: fadeUp 0.6s 0.3s both; }
+.animate-fade-up-4 { animation: fadeUp 0.6s 0.4s both; }
+
+.animate-pulse-dot {
+  animation: pulse-dot 2.2s infinite;
+}

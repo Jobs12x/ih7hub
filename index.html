@@ -1220,14 +1220,53 @@ function collect() {
   };
 }
 
+// —— STORAGE UPLOAD
+async function uploadFilesToStorage(files, folder) {
+  const urls = [];
+  for (const file of files) {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}-${safeName}`;
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/diagnosticos-arquivos/${path}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'false',
+      },
+      body: file,
+    });
+    if (!res.ok) throw new Error(`Erro ao enviar arquivo: ${file.name}`);
+    urls.push(`${SUPABASE_URL}/storage/v1/object/public/diagnosticos-arquivos/${path}`);
+  }
+  return urls;
+}
+
 // —— SUBMIT
 async function submitForm() {
   if (!validate(current)) return;
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
-  btn.textContent = 'Enviando...';
-  const payload = collect();
   try {
+    const filesProcessos = uploadedFiles['files_processos'] || [];
+    const filesGerais    = uploadedFiles['files_geral']     || [];
+
+    if (filesProcessos.length + filesGerais.length > 0) {
+      btn.textContent = 'Enviando arquivos...';
+    } else {
+      btn.textContent = 'Enviando...';
+    }
+
+    const [urlsProcessos, urlsGerais] = await Promise.all([
+      uploadFilesToStorage(filesProcessos, 'processos'),
+      uploadFilesToStorage(filesGerais,    'geral'),
+    ]);
+
+    btn.textContent = 'Salvando...';
+    const payload = collect();
+    payload.arquivos_processos = urlsProcessos;
+    payload.arquivos_gerais    = urlsGerais;
+
     const res = await fetch(`${SUPABASE_URL}/rest/v1/diagnosticos`, {
       method: 'POST',
       headers: {
@@ -1246,7 +1285,7 @@ async function submitForm() {
     scrollTop();
   } catch (err) {
     console.error(err);
-    toast('Erro ao enviar. Verifique a configuração do Supabase.', 'error');
+    toast('Erro ao enviar. Verifique a conexão.', 'error');
     btn.disabled = false;
     btn.textContent = 'Enviar Diagnóstico';
   }
